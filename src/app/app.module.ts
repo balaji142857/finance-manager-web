@@ -6,11 +6,21 @@ import { AppComponent } from './app.component';
 import { ChartsModule } from 'ng2-charts';
 import { BusySpinnerModule } from 'busy-spinner';
 import { MaterialModule } from 'src/common/material/material.module';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ExpenseComponent } from './expense/expense.component';
+import { IncomeComponent } from './income/income.component';
+import { AssetComponent } from './asset/asset.component';
+import { ReportComponent } from './report/report.component';
 
 // Pass the fusioncharts library and chart modules
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DashboardComponent,
+    ExpenseComponent,
+    IncomeComponent,
+    AssetComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule,

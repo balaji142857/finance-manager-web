@@ -1,0 +1,46 @@
+<div class="wrapper">
+  <mat-card>
+    <mat-card-content>
+      <div class="chart-wrapper">
+        <canvas baseChart
+            [datasets]="lineChartData"
+            [labels]="lineChartLabels"
+            [options]="lineChartOptions"
+            [colors]="lineChartColors"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType"
+            [plugins]="lineChartPlugins">
+        </canvas>
+    </div>
+    </mat-card-content>
+
+  </mat-card>
+
+
+  <mat-card>
+    <mat-card-cotent>
+      <div class="chart-wrapper">
+        <canvas baseChart
+        [datasets]="barChartData"
+        [labels]="barChartLabels"
+        [options]="barChartOptions"
+        [plugins]="barChartPlugins"
+        [legend]="barChartLegend"
+        [chartType]="barChartType">
+      </canvas>
+    </div>
+    </mat-card-cotent>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-content>
+      <div class="chart-wrapper">
+        <canvas baseChart
+        [data]="doughnutChartData"
+        [labels]="doughnutChartLabels"
+        [chartType]="doughnutChartType">
+      </canvas>
+    </div>
+    </mat-card-content>
+  </mat-card>
+</div>
