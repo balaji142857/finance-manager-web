@@ -10,6 +10,9 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import {MatMenuModule} from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [],
@@ -24,7 +27,10 @@ import { MatButtonModule } from '@angular/material/button';
     MatDividerModule,
     MatListModule,
     MatMenuModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatProgressBarModule
   ],
   exports: [
     MatToolbarModule,
@@ -36,7 +42,10 @@ import { MatButtonModule } from '@angular/material/button';
     MatDividerModule,
     MatListModule,
     MatMenuModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatProgressBarModule
   ]
 })
 export class MaterialModule { }

@@ -1,0 +1,54 @@
+<div class="wrapper">
+  <mat-card class="mat-elevation-z5">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>Shiba Inu</mat-card-title>
+      <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <mat-card class="chart-card mat-elevation-z3">
+        <mat-card-content>
+          <div class="chart-wrapper">
+            <canvas baseChart
+                [datasets]="lineChartData"
+                [labels]="lineChartLabels"
+                [options]="lineChartOptions"
+                [colors]="lineChartColors"
+                [legend]="lineChartLegend"
+                [chartType]="lineChartType"
+                [plugins]="lineChartPlugins">
+            </canvas>
+        </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card  class="chart-card mat-elevation-z3">
+        <mat-card-cotent>
+          <div class="chart-wrapper">
+            <canvas baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [plugins]="barChartPlugins"
+            [legend]="barChartLegend"
+            [chartType]="barChartType">
+          </canvas>
+        </div>
+        </mat-card-cotent>
+      </mat-card>
+
+      <mat-card class="chart-card mat-elevation-z3">
+        <mat-card-content>
+          <div class="chart-wrapper">
+            <canvas baseChart
+            [data]="doughnutChartData"
+            [labels]="doughnutChartLabels"
+            [chartType]="doughnutChartType">
+          </canvas>
+        </div>
+        </mat-card-content>
+      </mat-card>
+</mat-card-content>
+</mat-card>
+</div>
