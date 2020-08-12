@@ -1,3 +1,4 @@
+
 import { Component, ViewChild, OnInit } from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
 import {animate, state, style, transition, trigger} from '@angular/animations';
@@ -6,6 +7,7 @@ import { Asset } from '../models/asset.model';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AssetDialogComponent } from '../dialogs/asset-dialog/asset-dialog.component';
+
 
 @Component({
   selector: 'app-asset',
@@ -19,6 +21,7 @@ import { AssetDialogComponent } from '../dialogs/asset-dialog/asset-dialog.compo
     ])
   ],
 })
+
 export class AssetComponent implements OnInit{
 
   dataSource = [];

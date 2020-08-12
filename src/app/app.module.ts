@@ -12,6 +12,7 @@ import { ExpenseComponent } from './expense/expense.component';
 import { IncomeComponent } from './income/income.component';
 import { AssetComponent } from './asset/asset.component';
 import { ReportComponent } from './report/report.component';
+
 import { NavModule } from 'src/common/nav/nav.module';
 import { MatNumberInputModule } from 'mat-number-input';
 import { HamburgerButtonModule } from 'src/common/hamburger-button/hamburger-button.module';
@@ -20,6 +21,7 @@ import { AssetDialogComponent } from './dialogs/asset-dialog/asset-dialog.compon
 import { ExpenseDialogComponent } from './dialogs/expense-dialog/expense-dialog.component';
 import { CategoryDialogComponent } from './dialogs/category-dialog/category-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
+
 
 // Pass the fusioncharts library and chart modules
 @NgModule({
@@ -33,6 +35,7 @@ import { HttpClientModule } from '@angular/common/http';
     AssetDialogComponent,
     ExpenseDialogComponent,
     CategoryDialogComponent
+
   ],
   imports: [
     BrowserModule,

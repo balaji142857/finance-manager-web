@@ -12,6 +12,7 @@ import { ChartDataModel, ChartData } from '../models/chart-data.model';
 })
 export class DashboardComponent {
 
+
   assetChartData: ChartDataModel;
   dailyExpenseData: ChartDataModel;
   monthlyExpenseData: ChartDataModel;
