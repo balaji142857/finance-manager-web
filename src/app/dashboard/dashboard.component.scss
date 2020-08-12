@@ -1,20 +1,61 @@
-.wrapper {
-  // display: flex;
+$padding-size: 16px;
+.example-header-image {
+  font-size: 60px;
+  height: 60px;
+  width: 60px;
+  color: #3434f196;
 }
-
-
-
-mat-card.chart-card {
-  margin: 30px 20px;
-  width: 45 vw;
-  height: 50vh;
-  mat-card-content {
-    height: 100%;
-    overflow: auto;
+mat-card.card-wrapper{
+  padding: 0;
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $padding-size;
+    .title_wrapper{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      .subtitle{
+        color: gray;
+        font-size: 14px;
+      }
+    }
+    .header-text {
+      display: flex;
+    }
+    .header_left {
+      display: flex;
+    }
+    .header_right{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .download-icon {
+        font-size: 30px;
+        width: 30px;
+        height: 30px;
+      }
+      mat-form-field {
+        margin: 0 10px;
+      }
+    }
+  }
+  .chart-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: gray;
+    padding: $padding-size;
+    .chart-row {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      justify-content: center;
+      .chart-section {
+        flex-basis: 50%;
+      }
+    }
   }
 }
 
-.chart-wrapper {
-  // height: 40%;
-  // width: 40%;
-}
+

@@ -4,6 +4,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import { NavComponent } from './nav.component';
 import { RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { RouterModule } from '@angular/router';
     RouterModule,
     MatDividerModule,
     MatListModule,
+    MatIconModule
   ],
   exports: [NavComponent]
 })

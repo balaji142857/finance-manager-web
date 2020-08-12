@@ -10,19 +10,20 @@ export class NavComponent {
 
   @Input() items: NavModel[] =[{
     label: 'Dashboard',
-    route: 'dashboard'
+    route: 'dashboard',
+    icon: 'assessment'
   }, {
     label: 'Assets',
-    route: 'assets'
+    route: 'assets',
+    icon: 'account_balance'
   }, {
     label: 'Expense',
-    route: 'expense'
-  }, {
-    label: 'Income',
-    route: 'income'
+    route: 'expense',
+    icon: 'account_balance_wallet'
   }, {
     label: 'Reports',
-    route: 'reports'
+    route: 'reports',
+    icon: 'description'
   }];
 
   constructor() { }

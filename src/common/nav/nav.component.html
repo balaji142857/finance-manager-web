@@ -1,7 +1,10 @@
 <mat-list>
   <ng-container *ngFor="let item of items; let i = index">
     <mat-list-item >
-      <a [routerLink]="item.route" routerLinkActive="true"> {{ item.label }}</a>
+      <div class="item-wrapper">
+        <a class="nav-link" [routerLink]="item.route" routerLinkActive="true"> {{ item.label }}</a>
+        <mat-icon>{{ item.icon }}</mat-icon>
+    </div>
     </mat-list-item>
     <mat-divider *ngIf="i !== items.length - 1"></mat-divider>
   </ng-container>

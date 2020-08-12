@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppRoutingModule } from './app-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 import { ChartsModule } from 'ng2-charts';
 import { BusySpinnerModule } from 'busy-spinner';
 import { MaterialModule } from 'src/common/material/material.module';
@@ -12,6 +13,12 @@ import { IncomeComponent } from './income/income.component';
 import { AssetComponent } from './asset/asset.component';
 import { ReportComponent } from './report/report.component';
 import { NavModule } from 'src/common/nav/nav.module';
+import { MatNumberInputModule } from 'mat-number-input';
+import { HamburgerButtonModule } from 'src/common/hamburger-button/hamburger-button.module';
+import { ChartModule } from 'src/common/chart/chart.module';
+import { AssetDialogComponent } from './dialogs/asset-dialog/asset-dialog.component';
+import { ExpenseDialogComponent } from './dialogs/expense-dialog/expense-dialog.component';
+import { CategoryDialogComponent } from './dialogs/category-dialog/category-dialog.component';
 
 // Pass the fusioncharts library and chart modules
 @NgModule({
@@ -21,7 +28,10 @@ import { NavModule } from 'src/common/nav/nav.module';
     ExpenseComponent,
     IncomeComponent,
     AssetComponent,
-    ReportComponent
+    ReportComponent,
+    AssetDialogComponent,
+    ExpenseDialogComponent,
+    CategoryDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -30,9 +40,17 @@ import { NavModule } from 'src/common/nav/nav.module';
     BusySpinnerModule,
     MaterialModule,
     ChartsModule,
-    NavModule
+    NavModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatNumberInputModule,
+    HamburgerButtonModule,
+    ChartModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AssetDialogComponent,
+    ExpenseDialogComponent,
+    CategoryDialogComponent]
 })
 export class AppModule { }

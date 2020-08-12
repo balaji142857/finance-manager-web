@@ -7,16 +7,13 @@ import { Component, ViewChild } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'finance-manager';
-  hamburgerClass = false;
+  title = 'Finance Manager';
+  connectedUser = 'Balaji KRISHNAN'
   showFilter = false;
   @ViewChild('drawer') drawer;
 
   hamClicked() {
-    this.hamburgerClass = !this.hamburgerClass
     this.drawer.toggle();
   }
-  // Preparing the chart data
-
 
 }
