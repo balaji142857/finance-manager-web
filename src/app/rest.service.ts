@@ -17,43 +17,44 @@ export class RestService {
   constructor(private http: HttpClient) { }
 
   getAssets(): Observable<Asset[]> {
-    return of([
-      {
-        id: 2,
-        name: 'ICICI Net Banking',
-        usage: 500,
-        comment: 'Net banking',
-      }, {
-        id: 3,
-        name: 'Google pay',
-        usage: 10000,
-        comment: 'adsfasf',
-      }, {
-        id: 4,
-        name: 'Phone pay',
-        usage: 5000,
-        comment: 'adsfasf',
-      }, {
-        id: 5,
-        name: 'Amazon Pay',
-        usage: 7500,
-        comment: 'adsfasf',
-      }, {
-        id: 6,
-        name: 'Axis Net Banking',
-        usage: 2500,
-        comment: 'adsfasf',
-      }, {
-        id: 7,
-        name: 'Cash',
-        usage: 100,
-        comment: 'adsfasf',
-      }
-    ]);
+    return this.http.get<Asset[]>(this.basePath+'assets/');
+    // return of([
+    //   {
+    //     id: 2,
+    //     name: 'ICICI Net Banking',
+    //     usage: 500,
+    //     comment: 'Net banking',
+    //   }, {
+    //     id: 3,
+    //     name: 'Google pay',
+    //     usage: 10000,
+    //     comment: 'adsfasf',
+    //   }, {
+    //     id: 4,
+    //     name: 'Phone pay',
+    //     usage: 5000,
+    //     comment: 'adsfasf',
+    //   }, {
+    //     id: 5,
+    //     name: 'Amazon Pay',
+    //     usage: 7500,
+    //     comment: 'adsfasf',
+    //   }, {
+    //     id: 6,
+    //     name: 'Axis Net Banking',
+    //     usage: 2500,
+    //     comment: 'adsfasf',
+    //   }, {
+    //     id: 7,
+    //     name: 'Cash',
+    //     usage: 100,
+    //     comment: 'adsfasf',
+    //   }
+    // ]);
   }
 
-  saveAsset(asset: Asset) {
-    return this.http.post<number>(this.basePath+'assets/', asset);
+  saveAsset(asset: Asset): Observable<Asset> {
+    return this.http.post<Asset>(this.basePath+'assets/', asset);
   }
 
   getExpenseCategories(): Observable<CategoryModel[]> {

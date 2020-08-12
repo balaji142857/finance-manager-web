@@ -19,6 +19,7 @@ import { ChartModule } from 'src/common/chart/chart.module';
 import { AssetDialogComponent } from './dialogs/asset-dialog/asset-dialog.component';
 import { ExpenseDialogComponent } from './dialogs/expense-dialog/expense-dialog.component';
 import { CategoryDialogComponent } from './dialogs/category-dialog/category-dialog.component';
+import { HttpClientModule } from '@angular/common/http';
 
 // Pass the fusioncharts library and chart modules
 @NgModule({
@@ -36,6 +37,7 @@ import { CategoryDialogComponent } from './dialogs/category-dialog/category-dial
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     AppRoutingModule,
     BusySpinnerModule,
     MaterialModule,

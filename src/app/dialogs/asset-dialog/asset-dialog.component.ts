@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { RestService } from 'src/app/rest.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Asset } from 'src/app/models/asset.model';
+import { ConsoleReporter } from 'jasmine';
 
 @Component({
   selector: 'app-asset-dialog',
@@ -21,10 +22,14 @@ export class AssetDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  save() {
-    this.service.saveAsset().subscirbe(
-      data => {},
-      err => {}
+  save(asset: Asset) {
+    this.service.saveAsset(asset).subscribe(
+      data => {
+        console.log('asset saved', data);
+      },
+      err => {
+        console.log('asset save failed',err);
+      }
     )
   }
 
@@ -37,6 +42,12 @@ export class AssetDialogComponent implements OnInit {
       createdBy: null,
       usage: null
     }
+  }
+
+  cancel() {}
+
+  confirm() {
+    this.save(this.data.asset);
   }
 
 }
