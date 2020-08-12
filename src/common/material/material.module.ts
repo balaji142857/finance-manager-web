@@ -11,8 +11,16 @@ import {MatListModule} from '@angular/material/list';
 import {MatMenuModule} from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select'
+
 @NgModule({
-  declarations: [],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -25,7 +33,15 @@ import {MatTableModule} from '@angular/material/table';
     MatListModule,
     MatMenuModule,
     MatButtonModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule,
+    MatProgressBarModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule
   ],
   exports: [
     MatToolbarModule,
@@ -38,7 +54,15 @@ import {MatTableModule} from '@angular/material/table';
     MatListModule,
     MatMenuModule,
     MatButtonModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule,
+    MatProgressBarModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule
   ]
 })
 export class MaterialModule { }
