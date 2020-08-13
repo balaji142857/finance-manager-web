@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import * as env from '../environments/environment';
 import { Asset } from './models/asset.model';
 import { CategoryModel } from './models/category.model';
-import { TransactionModel } from './models/expense.model';
+import { ExpenseModel } from './models/expense.model';
 import { ChartDataModel } from './models/chart-data.model';
 
 @Injectable({
@@ -18,64 +18,26 @@ export class RestService {
 
   getAssets(): Observable<Asset[]> {
     return this.http.get<Asset[]>(this.basePath+'assets/');
-    // return of([
-    //   {
-    //     id: 2,
-    //     name: 'ICICI Net Banking',
-    //     usage: 500,
-    //     comment: 'Net banking',
-    //   }, {
-    //     id: 3,
-    //     name: 'Google pay',
-    //     usage: 10000,
-    //     comment: 'adsfasf',
-    //   }, {
-    //     id: 4,
-    //     name: 'Phone pay',
-    //     usage: 5000,
-    //     comment: 'adsfasf',
-    //   }, {
-    //     id: 5,
-    //     name: 'Amazon Pay',
-    //     usage: 7500,
-    //     comment: 'adsfasf',
-    //   }, {
-    //     id: 6,
-    //     name: 'Axis Net Banking',
-    //     usage: 2500,
-    //     comment: 'adsfasf',
-    //   }, {
-    //     id: 7,
-    //     name: 'Cash',
-    //     usage: 100,
-    //     comment: 'adsfasf',
-    //   }
-    // ]);
   }
 
   saveAsset(asset: Asset): Observable<Asset> {
     return this.http.post<Asset>(this.basePath+'assets/', asset);
   }
 
+  deleteAsset(id: number) {
+    return this.http.post(this.basePath+'assets/'+id,null);
+  }
+
   getExpenseCategories(): Observable<CategoryModel[]> {
-    return of([{
-      id: 1,
-      value: 'Groceries',
-      comment: 'string',
-      subCategories:[{
-        id: 1,
-        value: 'Fruits',
-      },{
-        id: 1,
-        value: 'Vegetables',
-      },{
-        id: 1,
-        value: 'Beverages',
-      }, {
-        id: 1,
-        value: 'Cookies',
-      }]
-    }]);
+    return this.http.get<CategoryModel[]>(this.basePath+'categories/');
+  }
+
+  saveCategory(cat: CategoryModel) {
+    return this.http.post(this.basePath+'categories/', cat);
+  }
+
+  deleteCategory(id: number) {
+    return this.http.post(this.basePath+'categories/'+id,null);
   }
 
   getDailyExpenses(): Observable<ChartDataModel> {
@@ -127,7 +89,7 @@ export class RestService {
     return of([]);
   }
 
-  getTransactions(): Observable<TransactionModel[]>{
+  getTransactions(): Observable<ExpenseModel[]>{
     return of([]);
   }
 

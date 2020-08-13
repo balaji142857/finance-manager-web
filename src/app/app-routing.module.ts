@@ -10,6 +10,7 @@ import { ExpCatResolverService } from './services/exp-cat-resolver.service';
 import { DailyExpenseResolverService } from './services/daily-expense-resolver.service';
 import { MonthlyExpenseResolverService } from './services/monthly-expense-resolver.service';
 import { CategoryExpenseResolverService } from './services/category-expense-resolver.service';
+import { SettingsComponent } from './settings/settings.component';
 
 
 const routes: Routes = [
@@ -27,13 +28,15 @@ const routes: Routes = [
       'dailyExpenes': DailyExpenseResolverService,
       'monthlyExpenes': MonthlyExpenseResolverService,
       'categoryExpenses': CategoryExpenseResolverService
-    }},
-  { component: ExpenseComponent, path: 'expense'},
-  { component: AssetComponent, path: 'assets',
-resolve: {
-  'assets' : AssetResolverService
-}},
-  { component: ReportComponent, path: 'reports'},
+    }}, { component: ExpenseComponent, path: 'expense'},
+    { component: AssetComponent, path: 'assets',
+      resolve: {
+        'assets' : AssetResolverService
+      }}, { component: ReportComponent, path: 'reports'},
+  { component: SettingsComponent, path: 'settings',
+  resolve: {
+    'categories': ExpCatResolverService
+  }}
 ];
 
 @NgModule({

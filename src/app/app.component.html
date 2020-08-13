@@ -10,24 +10,20 @@
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>
+      <!-- <button mat-menu-item >
         <mat-icon>dialpad</mat-icon>
         <span>Preferences/Settings - date,currency, number format, theme</span>
-      </button>
-      <button mat-menu-item disabled>
-        <mat-icon>voicemail</mat-icon>
-        <span>Logout/Login</span>
-      </button>
-      <button mat-menu-item>
-        <mat-icon>notifications</mat-icon>
-        <span>Notifications</span>
+      </button> -->
+      <button mat-menu-item *ngFor="let item of menuItems" [routerLink]="[item.link]">
+        <mat-icon> {{ item.icon }} </mat-icon>
+        <span> {{ item.title }} </span>
       </button>
     </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-drawer-container class="example-container" autosize>
   <mat-drawer #drawer class="example-sidenav mat-elevation-z8" mode="side">
-    <p style="visibility: hidden;">Lorem, ipsum dolor sit amet consectetur.</p>
+    <p style="visibility: hidden;">Lorem, ipsum dolor sit amet consectetumr.</p>
     <app-nav></app-nav>
   </mat-drawer>
   <div class="example-sidenav-content">

@@ -1,6 +1,6 @@
 import { BaseModel } from './base.model';
 
-export interface TransactionModel extends BaseModel {
+export interface ExpenseModel extends BaseModel {
 
   asset: number;
   amount: number;

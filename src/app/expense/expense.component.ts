@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { FormControl } from '@angular/forms';
-import { TransactionModel } from '../models/expense.model';
+import { ExpenseModel } from '../models/expense.model';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
@@ -25,10 +25,14 @@ export class ExpenseComponent {
 
   dataSource = ELEMENT_DATA.data;
   columnsToDisplay = ['id', 'name', 'balance', 'comment'];
-  expandedElement: TransactionModel | null;
+  expandedElement: ExpenseModel | null;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor() { }
+
+  openExpense(exp: ExpenseModel) {
+
+  }
 
 }
 
