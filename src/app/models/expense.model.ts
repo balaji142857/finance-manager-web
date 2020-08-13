@@ -8,6 +8,5 @@ export interface ExpenseModel extends BaseModel {
   category?: number;
   subCategory?: number;
   comment?: string
-  type: 'expense'|'income'
 
 }

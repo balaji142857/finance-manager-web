@@ -30,7 +30,11 @@ const routes: Routes = [
       'dailyExpenes': DailyExpenseResolverService,
       'monthlyExpenes': MonthlyExpenseResolverService,
       'categoryExpenses': CategoryExpenseResolverService
-    }}, { component: ExpenseComponent, path: 'expense'},
+    }}, { component: ExpenseComponent, path: 'expense',
+  resolve: {
+    'assets' : AssetResolverService,
+    'categories': ExpCatResolverService
+  }},
     { component: AssetComponent, path: 'assets',
       resolve: {
         'assets' : AssetResolverService

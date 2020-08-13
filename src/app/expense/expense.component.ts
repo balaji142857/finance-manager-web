@@ -3,6 +3,11 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import { FormControl } from '@angular/forms';
 import { ExpenseModel } from '../models/expense.model';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { ExpenseDialogComponent } from '../dialogs/expense-dialog/expense-dialog.component';
+import { CategoryModel } from '../models/category.model';
+import { Asset as AssetModel } from '../models/asset.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-expense',
@@ -20,6 +25,8 @@ export class ExpenseComponent {
 
   toppings = new FormControl();
   panelOpenState = true;
+  categories: CategoryModel[] = [];
+  assets: AssetModel[] = [];
   toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
 
 
@@ -28,10 +35,22 @@ export class ExpenseComponent {
   expandedElement: ExpenseModel | null;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor() { }
+  constructor(private dialog: MatDialog,
+    private route: ActivatedRoute) {
+      this.categories = route.snapshot.data['categories'];
+      this.assets = route.snapshot.data['assets'];
+    }
 
   openExpense(exp: ExpenseModel) {
-
+    const dialogRef = this.dialog.open(ExpenseDialogComponent, {
+      width: '100vw',
+      height: '50vh',
+      data: {
+        model: exp,
+        categories: this.categories,
+        assets: this.assets
+      }
+    });
   }
 
 }
