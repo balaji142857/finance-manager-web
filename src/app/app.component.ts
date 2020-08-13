@@ -12,6 +12,11 @@ export class AppComponent {
   showFilter = false;
   @ViewChild('drawer') drawer;
 
+  menuItems = [{ icon: 'dialpad', link: 'settings', title: 'Preferences' },
+  { icon: 'dialpad', link: 'settings', title: 'Themes' },
+  { icon: 'dialpad', link: 'settings', title: 'Categories' },
+  { icon: 'dialpad', link: 'settings', title: 'Notifications' }];
+
   hamClicked() {
     this.drawer.toggle();
   }

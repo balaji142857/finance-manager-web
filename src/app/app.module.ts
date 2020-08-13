@@ -21,6 +21,8 @@ import { AssetDialogComponent } from './dialogs/asset-dialog/asset-dialog.compon
 import { ExpenseDialogComponent } from './dialogs/expense-dialog/expense-dialog.component';
 import { CategoryDialogComponent } from './dialogs/category-dialog/category-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SettingsComponent } from './settings/settings.component';
+import { GenericDialogComponent } from './dialogs/generic-dialog/generic-dialog.component';
 
 
 // Pass the fusioncharts library and chart modules
@@ -34,8 +36,9 @@ import { HttpClientModule } from '@angular/common/http';
     ReportComponent,
     AssetDialogComponent,
     ExpenseDialogComponent,
-    CategoryDialogComponent
-
+    CategoryDialogComponent,
+    GenericDialogComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +59,7 @@ import { HttpClientModule } from '@angular/common/http';
   bootstrap: [AppComponent],
   entryComponents: [AssetDialogComponent,
     ExpenseDialogComponent,
-    CategoryDialogComponent]
+    CategoryDialogComponent,
+  GenericDialogComponent]
 })
 export class AppModule { }
