@@ -1,6 +1,9 @@
 <div>
 <form catForm ="#ngForm">
   <mat-form-field>
+    <input matInput name="id" [(ngModel)]="cat.id" placeholder="id" [disabled]="true">
+  </mat-form-field>
+  <mat-form-field>
     <input matInput name="name" [(ngModel)]="cat.name" placeholder="name">
   </mat-form-field>
   <mat-form-field>

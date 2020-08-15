@@ -55,6 +55,18 @@ export class RestService {
     );
   }
 
+  listExpenses(): Observable<ExpenseModel[]> {
+    return this.http.get<ExpenseModel[]>(this.basePath+'expenses');
+  }
+
+  saveExpense(exp: ExpenseModel) {
+    return this.http.post(this.basePath+'expenses/',[exp]);
+  }
+
+  deleteExpense(expId: number) {
+    return this.http.post(this.basePath+'expenses/delete/'+expId, null);
+  }
+
   getMonthlyExpenses(): Observable<ChartDataModel> {
     return of(
       {
@@ -71,17 +83,18 @@ export class RestService {
   }
 
   getExpensesByCategory(): Observable<ChartDataModel>  {
-    return of({
-      title: 'Expenses by category',
-      data: [
-        {label: 'Groceries', value: 10000},
-        {label: 'Rent', value: 50000},
-        {label: 'Broadband', value: 2500},
-        {label: 'Electricity', value: 3000},
-        {label: 'Mobile', value: 4000},
-        {label: 'Gas', value: 1500},
-      ]
-    });
+    return this.http.post<ChartDataModel>(this.basePath+'dashboard/expenseByCategories',{'from': null, 'to': null});
+    // return of({
+    //   title: 'Expenses by category',
+    //   data: [
+    //     {label: 'Groceries', value: 10000},
+    //     {label: 'Rent', value: 50000},
+    //     {label: 'Broadband', value: 2500},
+    //     {label: 'Electricity', value: 3000},
+    //     {label: 'Mobile', value: 4000},
+    //     {label: 'Gas', value: 1500},
+    //   ]
+    // });
   }
 
 

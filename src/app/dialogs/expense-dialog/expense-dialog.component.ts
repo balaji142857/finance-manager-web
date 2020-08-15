@@ -31,10 +31,9 @@ export class ExpenseDialogComponent implements OnInit {
   }
 
   confirm() {
-    this.dialog.close({
-
-    });
-  }
+    this.service.saveExpense(this.exp).subscribe(data =>
+      this.dialog.close({ confirmed: true }), err =>  this.dialog.close({}));
+    }
 
   getDefaultExpenseModel(): ExpenseModel {
     return {
