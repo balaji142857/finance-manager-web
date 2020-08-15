@@ -1,5 +1,5 @@
 
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatPaginator } from '@angular/material/paginator';
@@ -9,7 +9,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { AssetDialogComponent } from '../dialogs/asset-dialog/asset-dialog.component';
 import { GenericDialogComponent } from '../dialogs/generic-dialog/generic-dialog.component';
 import { RestService } from '../rest.service';
-
+import { MatSort } from '@angular/material/sort';
+import { merge, of } from 'rxjs';
+import { catchError,map, startWith, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-asset',
@@ -24,7 +26,7 @@ import { RestService } from '../rest.service';
   ],
 })
 
-export class AssetComponent implements OnInit{
+export class AssetComponent implements OnInit, AfterViewInit {
 
   dataSource = [];
   ELEMENT_DATA = {
@@ -35,12 +37,24 @@ export class AssetComponent implements OnInit{
     private dialog: MatDialog) {
     this.ELEMENT_DATA.data = this.route.snapshot.data['assets'];
   }
-  columnsToDisplay = ['actions', 'id', 'name', 'usage', 'comment'];
+  columnsToDisplay = ['id', 'name', 'usage', 'comment','actions'];
   expandedElement: Asset | null;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit() {
     this.dataSource = this.ELEMENT_DATA.data
+  }
+
+  ngAfterViewInit() {
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    merge(this.sort.sortChange, this.paginator.page)
+    .pipe(
+        startWith({}),
+        switchMap(() =>  this.service.getAssets() ),
+        map(data =>  data ),
+        catchError(() =>   of([]) )
+    ).subscribe(data => this.dataSource = data);
   }
 
   openAsset(asset: Asset) {
@@ -55,7 +69,7 @@ export class AssetComponent implements OnInit{
 			}
 		});
 		dialogRef.afterClosed().subscribe(result => {
-			if (result && result.data) {
+			if (result && result.asset) {
 				this.paginator._changePageSize(this.paginator.pageSize);
 			}
 		});
@@ -74,8 +88,16 @@ export class AssetComponent implements OnInit{
       data: {
         confirmationMessage: 'Do you want to delete this asset ?',
         cancelText: 'CANCEL',
-        confirmText: 'CONFIRM',
-        confirmMethod: this.service.deleteAsset(asset.id)
+        confirmText: 'CONFIRM'
+      }
+    });
+    ref.afterClosed().subscribe(data => {
+      console.log('delete dialog closed with ',data);
+      if (data && data.confirmed) {
+        console.log('issuing delete asset request');
+        this.service.deleteAsset(asset.id).subscribe(
+          data => this.paginator._changePageSize(this.paginator.pageSize),
+          err => console.log('asset not deleted'));
       }
     });
   }

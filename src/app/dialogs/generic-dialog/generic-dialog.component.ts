@@ -17,14 +17,9 @@ export class GenericDialogComponent implements OnInit {
   cancel() { this.dialogRef.close(); }
 
   confirm() {
-   this.data.confirmMethod(this.data.confirmationData).subscribe(
-     data => {
-       this.dialogRef.close();
-     },
-     err => {
-       console.log('action failed');
-     }
-   );
+    this.dialogRef.close({
+        confirmed: true
+    });
   }
 
 }

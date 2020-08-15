@@ -12,6 +12,7 @@ import { DailyExpenseResolverService } from './services/daily-expense-resolver.s
 import { MonthlyExpenseResolverService } from './services/monthly-expense-resolver.service';
 import { CategoryExpenseResolverService } from './services/category-expense-resolver.service';
 import { SettingsComponent } from './settings/settings.component';
+import { ExpenseResolverService } from './services/expense-resolver.service';
 
 
 
@@ -33,7 +34,8 @@ const routes: Routes = [
     }}, { component: ExpenseComponent, path: 'expense',
   resolve: {
     'assets' : AssetResolverService,
-    'categories': ExpCatResolverService
+    'categories': ExpCatResolverService,
+    'expenses': ExpenseResolverService
   }},
     { component: AssetComponent, path: 'assets',
       resolve: {
