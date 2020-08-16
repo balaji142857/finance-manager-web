@@ -6,6 +6,9 @@ import { Asset } from '../models/asset.model';
 import { ChartConfigModel } from '../models/chart-config.model';
 import { ChartDataModel, ChartData } from '../models/chart-data.model';
 import { RestService } from '../rest.service';
+import * as config from '../../common/config';
+import { UtilService } from 'src/common/util.service';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -42,6 +45,7 @@ export class DashboardComponent {
     showLegends: true
   }
   constructor(private route: ActivatedRoute,
+      private util: UtilService,
       private service: RestService) {
     this.assetChartData = this.translate(this.route.snapshot.data['assets'], 'Asset Usage');
     this.dailyExpenseData = this.route.snapshot.data['dailyExpenes'];
@@ -50,25 +54,24 @@ export class DashboardComponent {
   }
 
   reloadChartData() {
+
     this.service.getDailyExpenses(this.from, this.to).subscribe(
       data =>  this.dailyExpenseData = data,
-      err => console.error(err)
+      err => this.util.showError(err, config.default.messages.chartLoadDailyExp)
     );
     this.service.getMonthlyExpenses(this.from, this.to).subscribe(
       data => this.monthlyExpenseData = data,
-      err => console.error(err)
+      err => this.util.showError(err, config.default.messages.chartLoadMonthlyExp)
     );
     this.service.getExpensesByCategory(this.from, this.to).subscribe(
       data => this.categoryExpenseData = data,
-      err => console.error(err)
+      err => this.util.showError(err, config.default.messages.chartLoadExpCat)
     );
 
   }
 
   dateRangeChanged() {
-    console.log('date range changed');
     this.reloadChartData();
-    console.log('date range change completed')
   }
 
   translate(data: Asset[], title: string): ChartDataModel {

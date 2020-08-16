@@ -6,19 +6,15 @@
       <span class="title">{{ title }}</span>
     </div>
     <span class="example-spacer"></span>
-    <button mat-icon-button [matMenuTriggerFor]="menu">
+    <!-- <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <!-- <button mat-menu-item >
-        <mat-icon>dialpad</mat-icon>
-        <span>Preferences/Settings - date,currency, number format, theme</span>
-      </button> -->
       <button mat-menu-item *ngFor="let item of menuItems" [routerLink]="[item.link]">
         <mat-icon> {{ item.icon }} </mat-icon>
         <span> {{ item.title }} </span>
       </button>
-    </mat-menu>
+    </mat-menu> -->
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-drawer-container class="example-container" autosize>
@@ -33,7 +29,7 @@
 
 <div class="footer" color="primary">
   <span class="connected-user"> {{ connectedUser }}</span>
-  <mat-progress-bar class="pb" mode="query" color="warn"></mat-progress-bar>
+  <!-- <mat-progress-bar class="pb" mode="query" color="warn"></mat-progress-bar> -->
 </div>
 
 </div>

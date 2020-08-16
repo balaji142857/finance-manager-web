@@ -14,6 +14,7 @@ import { GenericDialogComponent } from '../dialogs/generic-dialog/generic-dialog
 import { MatSort } from '@angular/material/sort';
 import { merge, of } from 'rxjs';
 import { catchError,map, startWith, switchMap } from 'rxjs/operators';
+import * as config from '../../common/config';
 
 @Component({
   selector: 'app-expense',
@@ -82,9 +83,8 @@ export class ExpenseComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(data => {
-      console.log('afterClosed ', data);
       if (data && data.confirmed) {
-        console.log('page size changed');
+        this.util.openSnackBar(config.default.messages.expSaved);
         this.paginator._changePageSize(this.paginator.pageSize);
       }
     });
@@ -103,8 +103,11 @@ export class ExpenseComponent implements OnInit {
       data => {
         if (data && data.confirmed) {
           this.service.deleteExpense(exp.id).subscribe(
-            data => this.paginator._changePageSize(this.paginator.pageSize),
-            err => console.log(err)
+            data => {
+              this.util.openSnackBar(config.default.messages.expDeleted)
+              this.paginator._changePageSize(this.paginator.pageSize)
+            },
+            err => this.util.openSnackBar(err, config.default.messages.expDeleteErr)
           );
         }
       }

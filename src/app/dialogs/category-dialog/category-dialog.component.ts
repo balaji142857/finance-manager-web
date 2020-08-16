@@ -1,23 +1,22 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { RestService } from 'src/app/rest.service';
 import { CategoryModel } from 'src/app/models/category.model';
-
+import * as config from '../../../common/config';
+import { UtilService } from 'src/common/util.service';
 @Component({
   selector: 'app-category-dialog',
   templateUrl: './category-dialog.component.html',
   styleUrls: ['./category-dialog.component.scss']
 })
-export class CategoryDialogComponent implements OnInit {
+export class CategoryDialogComponent{
   cat: CategoryModel;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
     private restService: RestService,
+    private util: UtilService,
     private dialog: MatDialogRef<CategoryDialogComponent>) {
       this.cat = data.category ? data.category : this.getDefaultCategory();
-  }
-
-  ngOnInit(): void {
   }
 
   cancel() {
@@ -27,12 +26,10 @@ export class CategoryDialogComponent implements OnInit {
   confirm() {
     this.restService.saveCategory(this.cat).subscribe(
       data => {
-        console.log('category saved', data);
+        this.util.openSnackBar(config.default.messages.catCreated);
         this.dialog.close();
       },
-      err => {
-        console.log('error in saving category',err);
-      }
+      err => this.util.showError(err, config.default.messages.catCreateError)
     )
   }
 

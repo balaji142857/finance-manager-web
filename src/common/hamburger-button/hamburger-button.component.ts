@@ -17,7 +17,6 @@ export class HamburgerButtonComponent implements OnInit {
   }
 
   emitClickEvent($event) {
-    console.log('ham click event emitted');
     this.hamburgerClass = !this.hamburgerClass;
     this.hamClicked.emit();
     $event.stopPropagation();
