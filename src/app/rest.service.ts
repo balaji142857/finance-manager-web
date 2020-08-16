@@ -40,8 +40,8 @@ export class RestService {
     return this.http.post(this.basePath+'categories/'+id,null);
   }
 
-  getDailyExpenses(): Observable<ChartDataModel> {
-    return this.http.post<ChartDataModel>(this.basePath+'dashboard/expenseByMonthDay',{'from': null, 'to': null});
+  getDailyExpenses(from, to): Observable<ChartDataModel> {
+    return this.http.post<ChartDataModel>(this.basePath+'dashboard/expenseByMonthDay',{'from': from, 'to': to});
   }
 
   listExpenses(): Observable<ExpenseModel[]> {
@@ -56,12 +56,12 @@ export class RestService {
     return this.http.post(this.basePath+'expenses/delete/'+expId, null);
   }
 
-  getMonthlyExpenses(): Observable<ChartDataModel> {
-    return this.http.post<ChartDataModel>(this.basePath+'dashboard/expenseByYearMonth',{'from': null, 'to': null});
+  getMonthlyExpenses(from, to): Observable<ChartDataModel> {
+    return this.http.post<ChartDataModel>(this.basePath+'dashboard/expenseByYearMonth',{'from': from, 'to': to});
   }
 
-  getExpensesByCategory(): Observable<ChartDataModel>  {
-    return this.http.post<ChartDataModel>(this.basePath+'dashboard/expenseByCategories',{'from': null, 'to': null});
+  getExpensesByCategory(from, to): Observable<ChartDataModel>  {
+    return this.http.post<ChartDataModel>(this.basePath+'dashboard/expenseByCategories',{'from': from, 'to': to});
   }
 
 

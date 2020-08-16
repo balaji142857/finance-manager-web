@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType  } from 'chart.js';
 import { Color, Label, MultiDataSet} from 'ng2-charts';
 import { ChartDataModel } from 'src/app/models/chart-data.model';
@@ -9,7 +9,7 @@ import { ChartConfigModel } from 'src/app/models/chart-config.model';
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss']
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent implements OnInit, OnChanges {
 
   @Input('data') data: ChartDataModel ;
   @Input('userConfig') userConfig: ChartConfigModel;
@@ -25,6 +25,10 @@ export class ChartComponent implements OnInit {
   chartLabels: Label[] = [];
 
   constructor() { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+      this.initialize();
+  }
 
   ngOnInit() {
     this.initialize();

@@ -11,13 +11,13 @@
       <div class="header_right">
           <mat-form-field>
             <mat-label>From date</mat-label>
-            <input matInput [matDatepicker]="fromPicker">
+            <input matInput [matDatepicker]="fromPicker" [(ngModel)]="from" (ngModelChange)="dateRangeChanged()">
             <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
             <mat-datepicker #fromPicker color="primary"></mat-datepicker>
           </mat-form-field>
           <mat-form-field>
             <mat-label>To date</mat-label>
-            <input matInput [matDatepicker]="toPicker">
+            <input matInput [matDatepicker]="toPicker" [(ngModel)]="to" (ngModelChange)="dateRangeChanged()">
             <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
             <mat-datepicker #toPicker color="primary"></mat-datepicker>
           </mat-form-field>

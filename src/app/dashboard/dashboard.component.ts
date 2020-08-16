@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Asset } from '../models/asset.model';
 import { ChartConfigModel } from '../models/chart-config.model';
 import { ChartDataModel, ChartData } from '../models/chart-data.model';
+import { RestService } from '../rest.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -17,6 +18,8 @@ export class DashboardComponent {
   dailyExpenseData: ChartDataModel;
   monthlyExpenseData: ChartDataModel;
   categoryExpenseData: ChartDataModel;
+  from: string;
+  to: string;
 
   barChartConfig: ChartConfigModel = {
     chartType: 'bar',
@@ -38,11 +41,34 @@ export class DashboardComponent {
     responsive: true,
     showLegends: true
   }
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+      private service: RestService) {
     this.assetChartData = this.translate(this.route.snapshot.data['assets'], 'Asset Usage');
     this.dailyExpenseData = this.route.snapshot.data['dailyExpenes'];
     this.monthlyExpenseData = this.route.snapshot.data['monthlyExpenes'];
     this.categoryExpenseData = this.route.snapshot.data['categoryExpenses'];
+  }
+
+  reloadChartData() {
+    this.service.getDailyExpenses(this.from, this.to).subscribe(
+      data =>  this.dailyExpenseData = data,
+      err => console.error(err)
+    );
+    this.service.getMonthlyExpenses(this.from, this.to).subscribe(
+      data => this.monthlyExpenseData = data,
+      err => console.error(err)
+    );
+    this.service.getExpensesByCategory(this.from, this.to).subscribe(
+      data => this.categoryExpenseData = data,
+      err => console.error(err)
+    );
+
+  }
+
+  dateRangeChanged() {
+    console.log('date range changed');
+    this.reloadChartData();
+    console.log('date range change completed')
   }
 
   translate(data: Asset[], title: string): ChartDataModel {
