@@ -1,8 +1,15 @@
-
-<mat-card class="mat-elevation-z5">
-  test card
-  <mat-card-content>
-    <mat-expansion-panel>
+<mat-card class="card-wrapper">
+  <div class="header">
+    <div class="header-text">
+        <mat-icon class="example-header-image">settings</mat-icon>
+        <div class="title_wrapper">
+          <div class="title">Settings</div>
+          <div class="subtitle">User preferences & settings</div>
+        </div>
+    </div>
+  </div>
+  <mat-card-content class="card-content-wrapper">
+    <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Filter
@@ -13,7 +20,7 @@
       </div>
     </mat-expansion-panel>
 
-    <mat-expansion-panel>
+    <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Categories
@@ -21,7 +28,7 @@
       </mat-expansion-panel-header>
       <div class="category-wrapper">
         <mat-icon (click)="openCategories(null)">add</mat-icon>
-        <mat-divider></mat-divider>
+        <!-- <mat-divider></mat-divider> -->
         <mat-chip-list *ngFor="let cat of categories">
           <mat-chip
           [removable]="true" color="primary" (removed)="handleRemove(cat)">

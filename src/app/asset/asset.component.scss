@@ -1,40 +1,11 @@
-
 @import '~@angular/material/theming';
+@import '../../assets/styles/page_card';
+@import '../../assets/styles/table';
 @include mat-core();
-
 
 $primary: mat-palette($mat-indigo, 600, 500, 900);
 $accent: mat-palette($mat-amber, A400, A300, A600);
 
-
-table {
-  width: 100%;
-}
-
-
-tr.header-row {
-  background-color: mat-color($primary);
-  th {
-    color: white;
-  }
-
-}
-
-tr.example-detail-row {
-  height: 0;
-}
-
-tr.example-element-row:not(.example-expanded-row):hover {
-  background: whitesmoke;
-}
-
-tr.example-element-row:not(.example-expanded-row):active {
-  background: #efefef;
-}
-
-.example-element-row td {
-  border-bottom-width: 0;
-}
 
 .example-element-detail {
   overflow: hidden;

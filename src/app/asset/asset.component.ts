@@ -12,6 +12,8 @@ import { RestService } from '../rest.service';
 import { MatSort } from '@angular/material/sort';
 import { merge, of } from 'rxjs';
 import { catchError,map, startWith, switchMap } from 'rxjs/operators';
+import { UtilService } from 'src/common/util.service';
+import * as config from '../../common/config';
 
 @Component({
   selector: 'app-asset',
@@ -34,6 +36,7 @@ export class AssetComponent implements OnInit, AfterViewInit {
   };
   constructor(private route: ActivatedRoute,
     private service: RestService,
+    private util: UtilService,
     private dialog: MatDialog) {
     this.ELEMENT_DATA.data = this.route.snapshot.data['assets'];
   }
@@ -76,7 +79,6 @@ export class AssetComponent implements OnInit, AfterViewInit {
   }
 
   editAsset(asset: Asset, event) {
-    console.log('editign asset ',asset);
     this.openAsset(JSON.parse(JSON.stringify(asset)));
     this.suppressEvent(event);
   }
@@ -92,12 +94,13 @@ export class AssetComponent implements OnInit, AfterViewInit {
       }
     });
     ref.afterClosed().subscribe(data => {
-      console.log('delete dialog closed with ',data);
       if (data && data.confirmed) {
-        console.log('issuing delete asset request');
         this.service.deleteAsset(asset.id).subscribe(
-          data => this.paginator._changePageSize(this.paginator.pageSize),
-          err => console.log('asset not deleted'));
+          data => {
+            this.paginator._changePageSize(this.paginator.pageSize)
+            this.util.openSnackBar(config.default.messages.assetDeleted);
+          },
+          err => this.util.openSnackBar(config.default.messages.assetDeleteErr))
       }
     });
   }

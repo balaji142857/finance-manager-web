@@ -1,8 +1,19 @@
-<div>
-  <mat-icon (click)="openAsset(null)">add_cirlce</mat-icon>
-  <table matSort mat-table
-        [dataSource]="dataSource" multiTemplateDataRows
-        class="mat-elevation-z8">
+<mat-card class="card-wrapper">
+  <div class="header">
+    <div class="header-text">
+        <mat-icon class="example-header-image">account_balance</mat-icon>
+        <div class="title_wrapper">
+          <div class="title">Assets</div>
+          <div class="subtitle">Asset usage overview</div>
+        </div>
+    </div>
+    <div class="header-right">
+      <mat-icon (click)="openAsset(null)">add_cirlce</mat-icon>
+    </div>
+  </div>
+  <mat-card-content class="card-content-wrapper">
+    <table matSort mat-table [dataSource]="dataSource" multiTemplateDataRows
+        class="mat-elevation-z2">
 
     <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
       <th mat-header-cell mat-sort-header="{{column}}" *matHeaderCellDef> {{column}} </th>
@@ -39,8 +50,6 @@
         </div>
       </td>
     </ng-container>
-
-
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay" class="header-row"></tr>
 
     <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
@@ -51,4 +60,8 @@
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
   </table>
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-</div>
+  </mat-card-content>
+</mat-card>
+
+
+

@@ -1,26 +1,29 @@
-<div class="wraper">
-
+<mat-card class="card-wrapper">
+  <div class="header">
+    <div class="header-text">
+        <mat-icon class="example-header-image">account_balance_wallet</mat-icon>
+        <div class="title_wrapper">
+          <div class="title">Expenses</div>
+          <div class="subtitle">Expenditure</div>
+        </div>
+    </div>
+    <div class="header-right">
+      <mat-icon (click)="openExpense(null, $event)">add</mat-icon>
+    </div>
+  </div>
+  <mat-card-content class="card-content-wrapper">
     <mat-expansion-panel (opened)="panelOpenState = true"
                          (closed)="panelOpenState = false" style="margin-bottom: 20px;">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Filter
+          Filter Expenses
         </mat-panel-title>
-        <mat-panel-description>
-          {{panelOpenState ? 'open' : 'closed'}}
-        </mat-panel-description>
       </mat-expansion-panel-header>
       <div class="filter-wrapper">
-        <div>
+        <div class="f-row">
           <mat-form-field>
             <mat-label>Asset</mat-label>
             <mat-select [formControl]="toppings" multiple>
-              <!-- <mat-select-trigger>
-                {{toppings.value ? toppings.value[0] : ''}}
-                <span *ngIf="toppings.value?.length > 1" class="example-additional-selection">
-                  (+{{toppings.value.length - 1}} {{toppings.value?.length === 2 ? 'other' : 'others'}})
-                </span>
-              </mat-select-trigger> -->
               <mat-option *ngFor="let asset of assets" [value]="asset.id">{{asset.name}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -44,8 +47,10 @@
           </mat-form-field>
         </div>
 
-        <div>
-          date range:
+        <div class="f-row">
+          <div>
+            Date range
+          </div>
           <mat-form-field>
             <mat-label>From date</mat-label>
             <input matInput [matDatepicker]="fromPicker">
@@ -59,20 +64,24 @@
             <mat-datepicker #toPicker color="primary"></mat-datepicker>
           </mat-form-field>
         </div>
-        <div>
-          amount range:
-          <!-- <number-input></number-input>
-          <number-input></number-input> -->
+        <div class="f-row">
+          <div>
+            Amount range
+          </div>
+          <mat-form-field>
+            <input matInput type="number" placeholder="min" >
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="number" placeholder="min" >
+          </mat-form-field>
         </div>
       </div>
     </mat-expansion-panel>
-    <mat-divider></mat-divider>
-    <mat-icon (click)="openExpense(null, $event)">add</mat-icon>
-    <mat-divider></mat-divider>
 
-  <mat-card class="mat-elevation-z5">
+
+
     <table mat-table matSort [dataSource]="dataSource" multiTemplateDataRows
-        class="mat-elevation-z8">
+        class="mat-elevation-z2">
 
     <ng-container matColumnDef="asset">
       <th mat-header-cell mat-sort-header="asset" *matHeaderCellDef> Asset </th>
@@ -148,5 +157,6 @@
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
   </table>
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-  </mat-card>
-</div>
+</mat-card-content>
+</mat-card>
+

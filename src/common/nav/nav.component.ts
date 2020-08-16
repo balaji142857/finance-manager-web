@@ -24,6 +24,10 @@ export class NavComponent {
     label: 'Reports',
     route: 'reports',
     icon: 'description'
+  }, {
+    label: 'Settings',
+    route: 'settings',
+    icon: 'settings'
   }];
 
   constructor() { }

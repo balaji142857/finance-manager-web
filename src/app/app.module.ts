@@ -23,6 +23,7 @@ import { CategoryDialogComponent } from './dialogs/category-dialog/category-dial
 import { HttpClientModule } from '@angular/common/http';
 import { SettingsComponent } from './settings/settings.component';
 import { GenericDialogComponent } from './dialogs/generic-dialog/generic-dialog.component';
+import { SnackbarModule } from 'src/common/snackbar/snackbar.module';
 
 
 // Pass the fusioncharts library and chart modules
@@ -54,6 +55,7 @@ import { GenericDialogComponent } from './dialogs/generic-dialog/generic-dialog.
     MatNumberInputModule,
     HamburgerButtonModule,
     ChartModule,
+    SnackbarModule
   ],
   providers: [],
   bootstrap: [AppComponent],
