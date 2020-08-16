@@ -12,6 +12,6 @@ export class CategoryExpenseResolverService implements Resolve<Observable<ChartD
   constructor(private service: RestService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot ): Observable<ChartDataModel>{
-    return this.service.getExpensesByCategory();
+    return this.service.getExpensesByCategory(null, null);
   }
 }

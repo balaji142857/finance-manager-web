@@ -40,19 +40,8 @@ export class RestService {
     return this.http.post(this.basePath+'categories/'+id,null);
   }
 
-  getDailyExpenses(): Observable<ChartDataModel> {
-    return of(
-      {
-        title: 'Daily expenses',
-        data: [
-          {label: '8-Aug', value: 123},
-          {label: '9-Aug', value: 500},
-          {label: '10-Aug', value: 2500},
-          {label: '11-Aug', value: 0},
-          {label: '12-Aug', value: 600}
-        ]
-      }
-    );
+  getDailyExpenses(from, to): Observable<ChartDataModel> {
+    return this.http.post<ChartDataModel>(this.basePath+'dashboard/expenseByMonthDay',{'from': from, 'to': to});
   }
 
   listExpenses(): Observable<ExpenseModel[]> {
@@ -67,34 +56,12 @@ export class RestService {
     return this.http.post(this.basePath+'expenses/delete/'+expId, null);
   }
 
-  getMonthlyExpenses(): Observable<ChartDataModel> {
-    return of(
-      {
-        title: 'Monthly expenses',
-        data: [
-          {label: 'Apr', value: 12000},
-          {label: 'May', value: 15000},
-          {label: 'Jun', value: 1000},
-          {label: 'Jul', value: 8000},
-          {label: 'Aug', value: 12500}
-        ]
-      }
-    );
+  getMonthlyExpenses(from, to): Observable<ChartDataModel> {
+    return this.http.post<ChartDataModel>(this.basePath+'dashboard/expenseByYearMonth',{'from': from, 'to': to});
   }
 
-  getExpensesByCategory(): Observable<ChartDataModel>  {
-    return this.http.post<ChartDataModel>(this.basePath+'dashboard/expenseByCategories',{'from': null, 'to': null});
-    // return of({
-    //   title: 'Expenses by category',
-    //   data: [
-    //     {label: 'Groceries', value: 10000},
-    //     {label: 'Rent', value: 50000},
-    //     {label: 'Broadband', value: 2500},
-    //     {label: 'Electricity', value: 3000},
-    //     {label: 'Mobile', value: 4000},
-    //     {label: 'Gas', value: 1500},
-    //   ]
-    // });
+  getExpensesByCategory(from, to): Observable<ChartDataModel>  {
+    return this.http.post<ChartDataModel>(this.basePath+'dashboard/expenseByCategories',{'from': from, 'to': to});
   }
 
 
