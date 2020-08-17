@@ -12,7 +12,7 @@ import { ExpenseComponent } from './expense/expense.component';
 import { IncomeComponent } from './income/income.component';
 import { AssetComponent } from './asset/asset.component';
 import { ReportComponent } from './report/report.component';
-
+import { FileUploadModule } from 'src/common/file-upload/file-upload.module';
 import { NavModule } from 'src/common/nav/nav.module';
 import { MatNumberInputModule } from 'mat-number-input';
 import { HamburgerButtonModule } from 'src/common/hamburger-button/hamburger-button.module';
@@ -55,7 +55,8 @@ import { SnackbarModule } from 'src/common/snackbar/snackbar.module';
     MatNumberInputModule,
     HamburgerButtonModule,
     ChartModule,
-    SnackbarModule
+    SnackbarModule,
+    FileUploadModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

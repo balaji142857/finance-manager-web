@@ -28,7 +28,6 @@
       </mat-expansion-panel-header>
       <div class="category-wrapper">
         <mat-icon (click)="openCategories(null)">add</mat-icon>
-        <!-- <mat-divider></mat-divider> -->
         <mat-chip-list *ngFor="let cat of categories">
           <mat-chip
           [removable]="true" color="primary" (removed)="handleRemove(cat)">

@@ -6,6 +6,7 @@ import { Asset } from './models/asset.model';
 import { CategoryModel } from './models/category.model';
 import { ExpenseModel } from './models/expense.model';
 import { ChartDataModel } from './models/chart-data.model';
+import { FileModel } from 'src/common/file-upload/file.model';
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +55,17 @@ export class RestService {
 
   deleteExpense(expId: number) {
     return this.http.post(this.basePath+'expenses/delete/'+expId, null);
+  }
+
+  importExpenses(files: FileModel[]) {
+      const formData: FormData = new FormData();
+      if (files) {
+        for (let i = 0; i < files.length; i++) {
+          formData.append('files', files[i].content, files[i].name);
+        }
+        console.log('making network call');
+        return this.http.post(this.basePath+'expenses/import',formData);
+      }
   }
 
   getMonthlyExpenses(from, to): Observable<ChartDataModel> {
