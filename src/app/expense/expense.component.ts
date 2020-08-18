@@ -78,8 +78,14 @@ export class ExpenseComponent implements OnInit {
     merge(this.sort.sortChange, this.paginator.page)
     .pipe(
         startWith({}),
-        switchMap(() =>  this.service.filterExpense(this.appliedFilterObj)),
+        switchMap(() =>  this.service.filterExpense({
+          options: {
+            pageIndex: this.paginator.pageIndex,
+            pageSize: this.paginator.pageSize
+          },
+          data: this.appliedFilterObj})),
         map(response =>  {
+          console.log('merge call has triggered filter call');
           this.appliedFilterResultsLength = (<any>response).overallCount;
           return (<any>response).data;
         }),
@@ -92,15 +98,25 @@ export class ExpenseComponent implements OnInit {
   }
 
   filterRecords() {
-    this.service.filterExpense(this.filterObj).subscribe(
-      data => this.resultCount = (<any>data).overallCount,
+    this.service.filterExpense({
+      options: {
+        pageIndex: this.paginator.pageIndex,
+        pageSize: this.paginator.pageSize
+      },
+      data: this.filterForm.value
+    }).subscribe(
+      data => {
+        console.log('got resposne for filter req',data)
+        this.resultCount = (<any>data).overallCount
+      },
       err => console.log(err)
     );
   }
 
   applyFilter() {
     this.appliedFilterObj = this.filterObj;
-    this.paginator.pageIndex = 0;
+    this.paginator._changePageSize(this.paginator.pageSize);
+    console.log('apply filter called');
   }
 
   resetFilter() {

@@ -8,6 +8,7 @@ import { ExpenseModel } from './models/expense.model';
 import { ChartDataModel } from './models/chart-data.model';
 import { FileModel } from 'src/common/file-upload/file.model';
 import { ExpenseFilterModel } from './models/expense-filter.model';
+import { SearchModel } from './models/search.model';
 
 @Injectable({
   providedIn: 'root'
@@ -58,15 +59,8 @@ export class RestService {
     return this.http.post(this.basePath+'expenses/delete/'+expId, null);
   }
 
-  filterExpense(filterObj: ExpenseFilterModel) {
-    return this.http.post(this.basePath+'expenses/filter', {
-      options: {
-        pageSize: 10,
-        pageIndex:0
-      },
-      data: filterObj
-    }
-    );
+  filterExpense(searchModel: SearchModel<ExpenseFilterModel>) {
+    return this.http.post(this.basePath+'expenses/filter', searchModel );
   }
 
   importExpenses(files: FileModel[]) {
@@ -75,7 +69,6 @@ export class RestService {
         for (let i = 0; i < files.length; i++) {
           formData.append('files', files[i].content, files[i].name);
         }
-        console.log('making network call');
         return this.http.post(this.basePath+'expenses/import',formData);
       }
   }
@@ -86,15 +79,6 @@ export class RestService {
 
   getExpensesByCategory(from, to): Observable<ChartDataModel>  {
     return this.http.post<ChartDataModel>(this.basePath+'dashboard/expenseByCategories',{'from': from, 'to': to});
-  }
-
-
-  getIncomeCategories(): Observable<CategoryModel[]>{
-    return of([]);
-  }
-
-  getTransactions(): Observable<ExpenseModel[]>{
-    return of([]);
   }
 
 
