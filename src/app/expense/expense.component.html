@@ -21,9 +21,6 @@
       </mat-expansion-panel-header>
       <div class="filter-wrapper">
         <form #filterForm="ngForm">
-          <div class="f-row">
-            {{ filterObj | json }}
-          </div>
         <div class="f-row">
           <mat-form-field class="flex-30">
             <mat-label>Asset</mat-label>
@@ -77,9 +74,7 @@
         </div>
         <div class="f-row">
           <div class="left">
-            <ng-container *ngIf="resultCount > 0">
               {{ resultCount }} results
-            </ng-container>
           </div>
           <div class="right">
             <button mat-raised-button (click)="applyFilter()">APPLY</button>
