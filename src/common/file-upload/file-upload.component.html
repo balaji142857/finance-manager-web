@@ -5,7 +5,7 @@
 	<div class="added_files" >
 			<div *ngFor="let file of files;let i = index;" class="files">
 				<div class="name">{{ file.name }}</div>
-				<div class="size">{{ Math.round(file.size / 1024, 0) }} KB </div>
+				<div class="size">{{ Math.round(file.size / 1024) }} KB </div>
 				<div class="comment">
 					<mat-form-field>
 						<input matInput [(ngModel)]="files[i].comment" [placeholder]="'comment'">
@@ -15,7 +15,7 @@
 					<mat-icon (click)="download(file, i, $event)" class="download">cloud_download</mat-icon>
 					<mat-icon (click)="delete(file, i, $event)" class="danger">delete</mat-icon>
 				</div>
-					 
+
 			</div>
 		</div>
 	<input type="file" id="fileUpload" style="visibility: hidden;" (change)="filesSelected($event)" multiple="true">

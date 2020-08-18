@@ -74,7 +74,6 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
 							size: val.size,
 							comment: null,
               section: this.config.section,
-              file: val
 						});
 				};
 		}

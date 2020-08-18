@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import { FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { FormControl, NgForm } from '@angular/forms';
 import { ExpenseModel } from '../models/expense.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
@@ -15,6 +16,7 @@ import { MatSort } from '@angular/material/sort';
 import { merge, of } from 'rxjs';
 import { catchError,map, startWith, switchMap } from 'rxjs/operators';
 import * as config from '../../common/config';
+import { ExpenseFilterModel } from '../models/expense-filter.model';
 
 @Component({
   selector: 'app-expense',
@@ -30,18 +32,29 @@ import * as config from '../../common/config';
 })
 export class ExpenseComponent implements OnInit {
 
-  toppings = new FormControl();
   panelOpenState = true;
   categories: CategoryModel[] = [];
   assets: AssetModel[] = [];
   expenses: ExpenseModel[] = [];
-  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
-
+  resultCount = 0;
   dataSource = [];
   ELEMENT_DATA = { data:[] };
   columnsToDisplay = ['asset','category','subCategory','amount','date','comment','actions'];
-  //
+  filterObj: ExpenseFilterModel =  {
+    asset: null,
+    category: null,
+    subCategory: null,
+    comment: null,
+    fromDate: null,
+    toDate: null,
+    minAmount: null,
+    maxAmount: null,
+    txDetail: null
+  }
+  appliedFilterResultsLength;
+  appliedFilterObj: ExpenseFilterModel;
   expandedElement: ExpenseModel | null;
+  @ViewChild('filterForm') filterForm: NgForm
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -53,10 +66,11 @@ export class ExpenseComponent implements OnInit {
       this.assets = route.snapshot.data['assets'];
       this.expenses= route.snapshot.data['expenses'];
       this.ELEMENT_DATA.data = this.expenses;
+      this.appliedFilterObj = this.service.getDefaultExpenseFilter().data;
   }
 
   ngOnInit() {
-      this.dataSource = this.ELEMENT_DATA.data
+    this.dataSource = this.ELEMENT_DATA.data
   }
 
   ngAfterViewInit() {
@@ -64,12 +78,34 @@ export class ExpenseComponent implements OnInit {
     merge(this.sort.sortChange, this.paginator.page)
     .pipe(
         startWith({}),
-        switchMap(() =>  this.service.listExpenses()),
-        map(data =>  data ),
-        catchError(() =>   of([]) )
-    ).subscribe(data => this.dataSource = data);
+        switchMap(() =>  this.service.filterExpense(this.appliedFilterObj)),
+        map(response =>  {
+          this.appliedFilterResultsLength = (<any>response).overallCount;
+          return (<any>response).data;
+        }),
+        catchError(() =>   of([]))
+    ).subscribe(result => this.dataSource = result);
+    this.filterForm.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe( data =>  this.filterRecords());
   }
 
+  filterRecords() {
+    this.service.filterExpense(this.filterObj).subscribe(
+      data => this.resultCount = (<any>data).overallCount,
+      err => console.log(err)
+    );
+  }
+
+  applyFilter() {
+    this.appliedFilterObj = this.filterObj;
+    this.paginator.pageIndex = 0;
+  }
+
+  resetFilter() {
+    this.filterForm.resetForm();
+  }
 
 
   openExpense(exp: ExpenseModel, event) {
@@ -119,5 +155,7 @@ export class ExpenseComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
   }
+
+
 
 }

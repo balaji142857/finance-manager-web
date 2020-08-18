@@ -27,7 +27,9 @@ export class CategoryDialogComponent{
     this.restService.saveCategory(this.cat).subscribe(
       data => {
         this.util.openSnackBar(config.default.messages.catCreated);
-        this.dialog.close();
+        this.dialog.close({
+          isChanged: true
+        });
       },
       err => this.util.showError(err, config.default.messages.catCreateError)
     )

@@ -7,6 +7,7 @@ import { CategoryModel } from './models/category.model';
 import { ExpenseModel } from './models/expense.model';
 import { ChartDataModel } from './models/chart-data.model';
 import { FileModel } from 'src/common/file-upload/file.model';
+import { ExpenseFilterModel } from './models/expense-filter.model';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +39,7 @@ export class RestService {
   }
 
   deleteCategory(id: number) {
-    return this.http.post(this.basePath+'categories/'+id,null);
+    return this.http.post(this.basePath+'categories/delete/'+id,null);
   }
 
   getDailyExpenses(from, to): Observable<ChartDataModel> {
@@ -55,6 +56,17 @@ export class RestService {
 
   deleteExpense(expId: number) {
     return this.http.post(this.basePath+'expenses/delete/'+expId, null);
+  }
+
+  filterExpense(filterObj: ExpenseFilterModel) {
+    return this.http.post(this.basePath+'expenses/filter', {
+      options: {
+        pageSize: 10,
+        pageIndex:0
+      },
+      data: filterObj
+    }
+    );
   }
 
   importExpenses(files: FileModel[]) {
@@ -83,6 +95,27 @@ export class RestService {
 
   getTransactions(): Observable<ExpenseModel[]>{
     return of([]);
+  }
+
+
+  getDefaultExpenseFilter() {
+    return {
+      options: {
+        pageSize: 10,
+        pageIndex: 0
+      },
+      data: {
+        asset: [],
+        category: [],
+        subCategory: [],
+        fromDate: null,
+        toDate: null,
+        minAmount: null,
+        maxAmount: null,
+        txDetail: null,
+        comment: null
+      }
+    }
   }
 
 }

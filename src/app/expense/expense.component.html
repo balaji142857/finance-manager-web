@@ -20,65 +20,76 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="filter-wrapper">
+        <form #filterForm="ngForm">
+          <div class="f-row">
+            {{ filterObj | json }}
+          </div>
         <div class="f-row">
-          <mat-form-field>
+          <mat-form-field class="flex-30">
             <mat-label>Asset</mat-label>
-            <mat-select [formControl]="toppings" multiple>
+            <mat-select [(ngModel)]="filterObj.asset" multiple name="asset">
               <mat-option *ngFor="let asset of assets" [value]="asset.id">{{asset.name}}</mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field>
+          <mat-form-field class="flex-30">
             <mat-label>Category</mat-label>
-            <mat-select [formControl]="toppings" multiple>
+            <mat-select [(ngModel)]="filterObj.category" multiple name="category">
               <mat-option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field>
+          <mat-form-field class="flex-30">
             <mat-label>SubCategory</mat-label>
-            <mat-select [formControl]="toppings" multiple>
-              <mat-select-trigger>
-                {{toppings.value ? toppings.value[0] : ''}}
-                <span *ngIf="toppings.value?.length > 1" class="example-additional-selection">
-                  (+{{toppings.value.length - 1}} {{toppings.value?.length === 2 ? 'other' : 'others'}})
-                </span>
-              </mat-select-trigger>
-              <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+            <mat-select [(ngModel)]="filterObj.subCategory" multiple name="subCategory">
+              <!-- <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option> -->
             </mat-select>
           </mat-form-field>
         </div>
 
         <div class="f-row">
-          <div>
-            Date range
-          </div>
           <mat-form-field>
-            <mat-label>From date</mat-label>
-            <input matInput [matDatepicker]="fromPicker">
+            <mat-label>Transaction From date</mat-label>
+            <input matInput [matDatepicker]="fromPicker" [(ngModel)]="filterObj.fromDate" name="fromDate">
             <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
             <mat-datepicker #fromPicker color="primary"></mat-datepicker>
           </mat-form-field>
           <mat-form-field>
-            <mat-label>To date</mat-label>
-            <input matInput [matDatepicker]="toPicker">
+            <mat-label>Transaction To date</mat-label>
+            <input matInput [matDatepicker]="toPicker" [(ngModel)]="filterObj.toDate" name="toDate">
             <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
             <mat-datepicker #toPicker color="primary"></mat-datepicker>
           </mat-form-field>
         </div>
         <div class="f-row">
-          <div>
-            Amount range
-          </div>
           <mat-form-field>
-            <input matInput type="number" placeholder="min" >
+            <input matInput type="number" placeholder="Expense minimum amount" [(ngModel)]="filterObj.minAmount" name="minAmount">
           </mat-form-field>
           <mat-form-field>
-            <input matInput type="number" placeholder="min" >
+            <input matInput type="number" placeholder="Expense maximum amount" [(ngModel)]="filterObj.maxAmount" name="maxAmount">
           </mat-form-field>
         </div>
+        <div class="f-row">
+          <mat-form-field>
+            <input matInput type="text" placeholder="Transaction detail" [(ngModel)]="filterObj.txDetail" name="txDetail">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="text" placeholder="comment" [(ngModel)]="filterObj.comment" name="comment">
+          </mat-form-field>
+        </div>
+        <div class="f-row">
+          <div class="left">
+            <ng-container *ngIf="resultCount > 0">
+              {{ resultCount }} results
+            </ng-container>
+          </div>
+          <div class="right">
+            <button mat-raised-button (click)="applyFilter()">APPLY</button>
+            <button mat-raised-button (click)="resetFilter()">RESET</button>
+          </div>
+        </div>
+      </form>
       </div>
+
     </mat-expansion-panel>
-
-
 
     <table mat-table matSort [dataSource]="dataSource" multiTemplateDataRows
         class="mat-elevation-z2">
@@ -93,14 +104,19 @@
      <ng-container matColumnDef="category">
       <th mat-header-cell *matHeaderCellDef mat-sort-header="category"> Category </th>
       <td mat-cell *matCellDef="let element">
-        {{ util.getObjectByProperty(categories, 'id',element.category).name }}
+        <ng-container *ngIf="element.category">
+          {{ util.getObjectByProperty(categories, 'id',element.category).name }}
+        </ng-container>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="subCategory" >
       <th mat-header-cell *matHeaderCellDef mat-sort-header="subCategory"> SubCategory </th>
       <td mat-cell *matCellDef="let element">
-        <ng-container *ngIf="element.subCategory">
+        <ng-container
+          *ngIf="element.subCategory
+          && util.getObjectByProperty(categories, 'id',element.category).subCategories
+          && util.getObjectByProperty(util.getObjectByProperty(categories, 'id',element.category).subCategories,'id',element.subCategory)" >
           {{util.getObjectByProperty(util.getObjectByProperty(categories, 'id',element.category).subCategories,'id',element.subCategory).name}}
         </ng-container>
       </td>
@@ -156,7 +172,7 @@
     </tr>
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
   </table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  <mat-paginator [length]="appliedFilterResultsLength" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </mat-card-content>
 </mat-card>
 
