@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { RestService } from '../rest.service';
+import { UtilService } from 'src/common/util.service';
 
 @Component({
   selector: 'app-report',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReportComponent implements OnInit {
 
-  constructor() { }
+  expenseFiles = [];
+
+  constructor(private service: RestService,
+    private util: UtilService) { }
 
   ngOnInit(): void {
+  }
+
+  import() {
+    if (this.expenseFiles) {
+      this.service.importExpenses(this.expenseFiles).subscribe(
+        data => console.log(data),
+        err => console.log(err)
+      );
+    }
   }
 
 }

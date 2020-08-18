@@ -6,6 +6,8 @@ import { Asset } from './models/asset.model';
 import { CategoryModel } from './models/category.model';
 import { ExpenseModel } from './models/expense.model';
 import { ChartDataModel } from './models/chart-data.model';
+import { FileModel } from 'src/common/file-upload/file.model';
+import { ExpenseFilterModel } from './models/expense-filter.model';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +39,7 @@ export class RestService {
   }
 
   deleteCategory(id: number) {
-    return this.http.post(this.basePath+'categories/'+id,null);
+    return this.http.post(this.basePath+'categories/delete/'+id,null);
   }
 
   getDailyExpenses(from, to): Observable<ChartDataModel> {
@@ -56,6 +58,28 @@ export class RestService {
     return this.http.post(this.basePath+'expenses/delete/'+expId, null);
   }
 
+  filterExpense(filterObj: ExpenseFilterModel) {
+    return this.http.post(this.basePath+'expenses/filter', {
+      options: {
+        pageSize: 10,
+        pageIndex:0
+      },
+      data: filterObj
+    }
+    );
+  }
+
+  importExpenses(files: FileModel[]) {
+      const formData: FormData = new FormData();
+      if (files) {
+        for (let i = 0; i < files.length; i++) {
+          formData.append('files', files[i].content, files[i].name);
+        }
+        console.log('making network call');
+        return this.http.post(this.basePath+'expenses/import',formData);
+      }
+  }
+
   getMonthlyExpenses(from, to): Observable<ChartDataModel> {
     return this.http.post<ChartDataModel>(this.basePath+'dashboard/expenseByYearMonth',{'from': from, 'to': to});
   }
@@ -71,6 +95,27 @@ export class RestService {
 
   getTransactions(): Observable<ExpenseModel[]>{
     return of([]);
+  }
+
+
+  getDefaultExpenseFilter() {
+    return {
+      options: {
+        pageSize: 10,
+        pageIndex: 0
+      },
+      data: {
+        asset: [],
+        category: [],
+        subCategory: [],
+        fromDate: null,
+        toDate: null,
+        minAmount: null,
+        maxAmount: null,
+        txDetail: null,
+        comment: null
+      }
+    }
   }
 
 }

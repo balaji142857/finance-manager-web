@@ -12,6 +12,9 @@
     </div> -->
   </div>
   <mat-card-content class="card-content-wrapper">
-    <p>report works !</p>
+    <form uploadForm="#ngForm">
+      <app-file-upload name="files" [(ngModel)]="expenseFiles"></app-file-upload>
+      <button mat-raised-button (click)="import()">Import</button>
+    </form>
   </mat-card-content>
 </mat-card>
