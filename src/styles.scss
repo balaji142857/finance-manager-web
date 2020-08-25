@@ -4,6 +4,7 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: "Oswald", sans-serif;
 }
 
 html, body {
@@ -13,6 +14,27 @@ html, body {
 mat-icon {
   cursor: pointer;
 }
+
+tr th button{
+    text-transform: uppercase;
+}
+
+.mat-snack-bar-container {
+  margin-bottom: 0 !important;
+
+}
+.snackbar_sucess {
+  background-color: #4e8715eb !important;
+}
+.snackbar_error{
+  background-color: crimson !important;
+}
+
+
+@import '~@angular/material/theming';
+$custom-typography: mat-typography-config($font-family: '"Oswald", sans-serif;');
+@include mat-core($custom-typography);
+
 
 @font-face {
 	font-family: 'Material Icons';

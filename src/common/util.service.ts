@@ -33,7 +33,7 @@ export class UtilService {
     this.openSnackBar(message, type ? type : 'success');
   }
 
-  openSnackBar(message: string, type?: string) {
+  openSnackBar(message: string, type: string = 'sucess') {
 	this._snackBar.openFromComponent(SnackbarComponent, {
       duration: config.default.snackbarDuration,
       panelClass: 'snackbar_'+type,

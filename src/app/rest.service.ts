@@ -81,6 +81,13 @@ export class RestService {
     return this.http.post<ChartDataModel>(this.basePath+'dashboard/expenseByCategories',{'from': from, 'to': to});
   }
 
+  getExpensesByCategoryNew(obj: any): Observable<ChartDataModel>  {
+    return this.http.post<ChartDataModel>(this.basePath+'dashboard/expenseByCategories',obj);
+  }
+
+  getAssetUsage(obj: any): Observable<ChartDataModel>  {
+    return this.http.post<ChartDataModel>(this.basePath+'dashboard/assetUsage',obj);
+  }
 
   getDefaultExpenseFilter() {
     return {
