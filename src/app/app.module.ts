@@ -24,6 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SettingsComponent } from './settings/settings.component';
 import { GenericDialogComponent } from './dialogs/generic-dialog/generic-dialog.component';
 import { SnackbarModule } from 'src/common/snackbar/snackbar.module';
+import { ExpenseFilterComponent } from './expense-filter/expense-filter.component';
 
 
 // Pass the fusioncharts library and chart modules
@@ -39,7 +40,8 @@ import { SnackbarModule } from 'src/common/snackbar/snackbar.module';
     ExpenseDialogComponent,
     CategoryDialogComponent,
     GenericDialogComponent,
-    SettingsComponent
+    SettingsComponent,
+    ExpenseFilterComponent
   ],
   imports: [
     BrowserModule,

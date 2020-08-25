@@ -12,83 +12,15 @@
     </div>
   </div>
   <mat-card-content class="card-content-wrapper">
-    <mat-expansion-panel (opened)="panelOpenState = true"
-                         (closed)="panelOpenState = false" style="margin-bottom: 20px;">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Filter Expenses
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="filter-wrapper">
-        <form #filterForm="ngForm">
-        <div class="f-row">
-          <mat-form-field class="flex-30">
-            <mat-label>Asset</mat-label>
-            <mat-select [(ngModel)]="filterObj.asset" multiple name="asset">
-              <mat-option *ngFor="let asset of assets" [value]="asset.id">{{asset.name}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field class="flex-30">
-            <mat-label>Category</mat-label>
-            <mat-select [(ngModel)]="filterObj.category" multiple name="category">
-              <mat-option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field class="flex-30">
-            <mat-label>SubCategory</mat-label>
-            <mat-select [(ngModel)]="filterObj.subCategory" multiple name="subCategory">
-              <!-- <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option> -->
-            </mat-select>
-          </mat-form-field>
-        </div>
+      <app-expense-filter
+      [assets]="assets"
+      [categories]="categories"
+      (apply)="applyFilter($event)">
+    </app-expense-filter>
 
-        <div class="f-row">
-          <mat-form-field>
-            <mat-label>Transaction From date</mat-label>
-            <input matInput [matDatepicker]="fromPicker" [(ngModel)]="filterObj.fromDate" name="fromDate">
-            <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-            <mat-datepicker #fromPicker color="primary"></mat-datepicker>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Transaction To date</mat-label>
-            <input matInput [matDatepicker]="toPicker" [(ngModel)]="filterObj.toDate" name="toDate">
-            <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-            <mat-datepicker #toPicker color="primary"></mat-datepicker>
-          </mat-form-field>
-        </div>
-        <div class="f-row">
-          <mat-form-field>
-            <input matInput type="number" placeholder="Expense minimum amount" [(ngModel)]="filterObj.minAmount" name="minAmount">
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput type="number" placeholder="Expense maximum amount" [(ngModel)]="filterObj.maxAmount" name="maxAmount">
-          </mat-form-field>
-        </div>
-        <div class="f-row">
-          <mat-form-field>
-            <input matInput type="text" placeholder="Transaction detail" [(ngModel)]="filterObj.txDetail" name="txDetail">
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput type="text" placeholder="comment" [(ngModel)]="filterObj.comment" name="comment">
-          </mat-form-field>
-        </div>
-        <div class="f-row">
-          <div class="left">
-              {{ resultCount }} results
-          </div>
-          <div class="right">
-            <button mat-raised-button (click)="applyFilter()">APPLY</button>
-            <button mat-raised-button (click)="resetFilter()">RESET</button>
-          </div>
-        </div>
-      </form>
-      </div>
-
-    </mat-expansion-panel>
 
     <table mat-table matSort [dataSource]="dataSource" multiTemplateDataRows
-        class="mat-elevation-z2">
-
+        class="expense-table mat-elevation-z2">
     <ng-container matColumnDef="asset">
       <th mat-header-cell mat-sort-header="asset" *matHeaderCellDef> Asset </th>
       <td mat-cell *matCellDef="let element">
@@ -132,11 +64,6 @@
        </td>
     </ng-container>
 
-    <ng-container matColumnDef="comment">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="comment"> Comment </th>
-      <td mat-cell *matCellDef="let element"> {{element.comment}} </td>
-    </ng-container>
-
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>  </th>
       <td mat-cell *matCellDef="let element">
@@ -149,11 +76,9 @@
       <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
         <div class="example-element-detail"
             [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-          <div class="example-element-diagram">
-          </div>
           <div class="example-element-description">
-            {{element.description}}
-            <span class="example-element-description-attribution"> -- Wikipedia </span>
+            {{ element.transactionDetail }}
+            <span *ngIf="element.comment" class="example-element-description-attribution"> -- {{element.comment}} </span>
           </div>
         </div>
       </td>
@@ -167,7 +92,7 @@
     </tr>
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
   </table>
-  <mat-paginator [length]="appliedFilterResultsLength" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  <mat-paginator [length]="appliedFilterResultsLength" [pageSizeOptions]="[5, 10, 20]" [pageSize]="10" showFirstLastButtons></mat-paginator>
 </mat-card-content>
 </mat-card>
 

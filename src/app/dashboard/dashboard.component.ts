@@ -8,6 +8,8 @@ import { ChartDataModel, ChartData } from '../models/chart-data.model';
 import { RestService } from '../rest.service';
 import * as config from '../../common/config';
 import { UtilService } from 'src/common/util.service';
+import { CategoryModel } from '../models/category.model';
+import { Asset as AssetModel } from '../models/asset.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,14 +18,19 @@ import { UtilService } from 'src/common/util.service';
 })
 export class DashboardComponent {
 
-
+  categories: CategoryModel[] = [];
+  assets: AssetModel[] = [];
   assetChartData: ChartDataModel;
   dailyExpenseData: ChartDataModel;
   monthlyExpenseData: ChartDataModel;
   categoryExpenseData: ChartDataModel;
   from: string;
   to: string;
-
+  filedsToDisable = {
+    subCategory: true,
+    comment: true,
+    txDetail: true
+  }
   barChartConfig: ChartConfigModel = {
     chartType: 'bar',
     responsive: true,
@@ -47,10 +54,22 @@ export class DashboardComponent {
   constructor(private route: ActivatedRoute,
       private util: UtilService,
       private service: RestService) {
-    this.assetChartData = this.translate(this.route.snapshot.data['assets'], 'Asset Usage');
+    this.assets = this.route.snapshot.data['assets'];
+    this.assetChartData = this.translate(this.assets, 'Asset Usage');
+    this.categories = route.snapshot.data['categories'];
     this.dailyExpenseData = this.route.snapshot.data['dailyExpenes'];
     this.monthlyExpenseData = this.route.snapshot.data['monthlyExpenes'];
     this.categoryExpenseData = this.route.snapshot.data['categoryExpenses'];
+  }
+  retrieveChartData(filterObj) {
+    this.service.getExpensesByCategoryNew(filterObj).subscribe(
+      data => this.categoryExpenseData = data,
+      err => this.util.showError(err, config.default.messages.chartLoadExpCat)
+    );
+    this.service.getAssetUsage(filterObj).subscribe(
+      data =>  this.assetChartData = data,
+      err => this.util.showError(err, config.default.messages.chartLoadAssetExp)
+    );
   }
 
   reloadChartData() {
@@ -63,10 +82,10 @@ export class DashboardComponent {
       data => this.monthlyExpenseData = data,
       err => this.util.showError(err, config.default.messages.chartLoadMonthlyExp)
     );
-    this.service.getExpensesByCategory(this.from, this.to).subscribe(
-      data => this.categoryExpenseData = data,
-      err => this.util.showError(err, config.default.messages.chartLoadExpCat)
-    );
+    // this.service.getExpensesByCategory(this.from, this.to).subscribe(
+    //   data => this.categoryExpenseData = data,
+    //   err => this.util.showError(err, config.default.messages.chartLoadExpCat)
+    // );
 
   }
 

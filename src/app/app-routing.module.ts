@@ -28,6 +28,7 @@ const routes: Routes = [
      component: DashboardComponent, path: 'dashboard',
       resolve: {
       'assets' : AssetResolverService,
+      'categories': ExpCatResolverService,
       'dailyExpenes': DailyExpenseResolverService,
       'monthlyExpenes': MonthlyExpenseResolverService,
       'categoryExpenses': CategoryExpenseResolverService

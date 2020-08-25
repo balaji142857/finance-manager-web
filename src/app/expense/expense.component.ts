@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { FormControl, NgForm } from '@angular/forms';
+
+import { ExpenseFilterModel } from '../models/expense-filter.model';
 import { ExpenseModel } from '../models/expense.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,7 +16,7 @@ import { MatSort } from '@angular/material/sort';
 import { merge, of } from 'rxjs';
 import { catchError,map, startWith, switchMap } from 'rxjs/operators';
 import * as config from '../../common/config';
-import { ExpenseFilterModel } from '../models/expense-filter.model';
+
 
 @Component({
   selector: 'app-expense',
@@ -36,25 +36,14 @@ export class ExpenseComponent implements OnInit {
   categories: CategoryModel[] = [];
   assets: AssetModel[] = [];
   expenses: ExpenseModel[] = [];
-  resultCount = 0;
   dataSource = [];
   ELEMENT_DATA = { data:[] };
-  columnsToDisplay = ['asset','category','subCategory','amount','date','comment','actions'];
-  filterObj: ExpenseFilterModel =  {
-    asset: null,
-    category: null,
-    subCategory: null,
-    comment: null,
-    fromDate: null,
-    toDate: null,
-    minAmount: null,
-    maxAmount: null,
-    txDetail: null
-  }
-  appliedFilterResultsLength;
+  columnsToDisplay = ['asset','category','subCategory','amount','date','actions'];
+
   appliedFilterObj: ExpenseFilterModel;
+  appliedFilterResultsLength;
   expandedElement: ExpenseModel | null;
-  @ViewChild('filterForm') filterForm: NgForm
+
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -91,38 +80,14 @@ export class ExpenseComponent implements OnInit {
         }),
         catchError(() =>   of([]))
     ).subscribe(result => this.dataSource = result);
-    this.filterForm.valueChanges.pipe(
-      debounceTime(300),
-      distinctUntilChanged()
-    ).subscribe( data =>  this.filterRecords());
   }
 
-  filterRecords() {
-    this.service.filterExpense({
-      options: {
-        pageIndex: this.paginator.pageIndex,
-        pageSize: this.paginator.pageSize
-      },
-      data: this.filterForm.value
-    }).subscribe(
-      data => {
-        console.log('got resposne for filter req',data)
-        this.resultCount = (<any>data).overallCount
-      },
-      err => console.log(err)
-    );
-  }
 
-  applyFilter() {
-    this.appliedFilterObj = this.filterObj;
+  applyFilter(filterObj) {
+    this.appliedFilterObj = filterObj;
     this.paginator._changePageSize(this.paginator.pageSize);
     console.log('apply filter called');
   }
-
-  resetFilter() {
-    this.filterForm.resetForm();
-  }
-
 
   openExpense(exp: ExpenseModel, event) {
     const dialogRef = this.dialog.open(ExpenseDialogComponent, {
@@ -159,7 +124,7 @@ export class ExpenseComponent implements OnInit {
               this.util.openSnackBar(config.default.messages.expDeleted)
               this.paginator._changePageSize(this.paginator.pageSize)
             },
-            err => this.util.openSnackBar(err, config.default.messages.expDeleteErr)
+            err => this.util.showError(err, config.default.messages.expDeleteErr)
           );
         }
       }

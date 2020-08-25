@@ -1,6 +1,6 @@
 <mat-list>
   <ng-container *ngFor="let item of items; let i = index">
-    <mat-list-item [routerLink]="item.route" routerLinkActive="true" class="list-item">
+    <mat-list-item [routerLink]="item.route" class="list-item">
       <div class="item-wrapper">
         <a class="nav-link" > {{ item.label }}</a>
         <mat-icon>{{ item.icon }}</mat-icon>

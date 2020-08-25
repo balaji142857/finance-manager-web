@@ -7,9 +7,3 @@ $my-app-warn:    mat-palette($mat-deep-orange);
 
 $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
 @include angular-material-theme($my-app-theme);
-
-// $typography: mat-typography-config(
-//        $font-family: 'Source Sans Pro, Open Sans, Arial, sans-serif',
-//        $headline: mat-typography-level(32px, 48px, 700),
-//        $button:mat-typography-level(14px, 14px, 700)
-// );
