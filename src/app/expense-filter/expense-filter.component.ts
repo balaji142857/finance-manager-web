@@ -6,6 +6,7 @@ import { ExpenseFilterModel } from '../models/expense-filter.model';
 import { FormControl, NgForm } from '@angular/forms';
 import { RestService } from '../rest.service';
 import { isNgTemplate } from '@angular/compiler';
+import { UtilService } from 'src/common/util.service';
 
 @Component({
   selector: 'app-expense-filter',
@@ -34,9 +35,8 @@ export class ExpenseFilterComponent implements AfterViewInit {
   @Input() assets: AssetModel[] = [];
   @Input() filedsToDisable :any = {};
   @Output() apply = new EventEmitter();
-  subCategories: SubCategoryModel[] = [];
 
-  constructor(private service: RestService) { }
+  constructor(private service: RestService, private util: UtilService) { }
 
 
 
@@ -65,16 +65,6 @@ export class ExpenseFilterComponent implements AfterViewInit {
       },
       err => console.log(err)
     );
-  }
-
-  populateSubCategories(catIds) {
-    this.subCategories = [];
-    if (!catIds || catIds.length ==0 ) {
-      return;
-    }
-    this.categories
-      .filter(item => catIds.indexOf(item.id) > -1)
-      .forEach(item => this.subCategories.push(...item.subCategories));
   }
 
 }
