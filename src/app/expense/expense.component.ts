@@ -16,7 +16,7 @@ import { MatSort } from '@angular/material/sort';
 import { merge, of } from 'rxjs';
 import { catchError,map, startWith, switchMap } from 'rxjs/operators';
 import * as config from '../../common/config';
-
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-expense',
@@ -70,7 +70,9 @@ export class ExpenseComponent implements OnInit {
         switchMap(() =>  this.service.filterExpense({
           options: {
             pageIndex: this.paginator.pageIndex,
-            pageSize: this.paginator.pageSize
+            pageSize: this.paginator.pageSize,
+            sort: this.sort.active,
+            sortDir: this.sort.direction
           },
           data: this.appliedFilterObj})),
         map(response =>  {
@@ -135,6 +137,10 @@ export class ExpenseComponent implements OnInit {
   stopEvent(event) {
     event.preventDefault();
     event.stopPropagation();
+  }
+
+  downloadExpenses() {
+    this.service.downloadExpenses().subscribe(data => saveAs(data, 'ApplicationExport.xls'));
   }
 
 

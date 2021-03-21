@@ -44,10 +44,11 @@
       <mat-datepicker #toPicker color="primary"></mat-datepicker>
     </mat-form-field>
   </div>
-  <div class="f-row">
+  <div class="f-row" *ngIf="!filedsToDisable.minAmount || !filedsToDisable.maxAmount">
+    <!-- <mat-number-input [(ngModel)]="filterObj.minAmount"></mat-number-input> -->
     <mat-form-field>
       <input matInput type="number" placeholder="Expense minimum amount"
-      [(ngModel)]="filterObj.minAmount" name="minAmount" [disabled]="filedsToDisable.minAmount">
+        [(ngModel)]="filterObj.minAmount" name="minAmount" [disabled]="filedsToDisable.minAmount">
     </mat-form-field>
     <mat-form-field>
       <input matInput type="number" placeholder="Expense maximum amount"

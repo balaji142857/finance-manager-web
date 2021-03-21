@@ -11,6 +11,6 @@ export class MonthlyExpenseResolverService implements Resolve<Observable<ChartDa
   constructor(private service: RestService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot ): Observable<ChartDataModel>{
-    return this.service.getMonthlyExpenses(null, null);
+    return this.service.getMonthlyExpenses({});
   }
 }

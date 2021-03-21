@@ -31,7 +31,7 @@ export class ExpenseFilterComponent implements AfterViewInit {
 
   @Input() categories: CategoryModel[] = [];
   @Input() assets: AssetModel[] = [];
-  @Input() filedsToDisable = {};
+  @Input() filedsToDisable :any = {};
   @Output() apply = new EventEmitter();
 
   constructor(private service: RestService) { }

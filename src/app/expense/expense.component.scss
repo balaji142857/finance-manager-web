@@ -30,6 +30,9 @@ $accent: mat-palette($mat-amber, A400, A300, A600);
 
 .example-element-description {
   padding: 16px;
+  letter-spacing: 1.5px;
+  font-weight: normal;
+  font-size: 30px;
 }
 
 .example-element-description-attribution {

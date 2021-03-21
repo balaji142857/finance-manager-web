@@ -12,6 +12,6 @@ export class DailyExpenseResolverService implements Resolve<Observable<ChartData
   constructor(private service: RestService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot ): Observable<ChartDataModel>{
-    return this.service.getDailyExpenses(null, null);
+    return this.service.getDailyExpenses({});
   }
 }
