@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { CategoryModel } from '../models/category.model';
+import { CategoryModel, SubCategoryModel } from '../models/category.model';
 import { Asset as AssetModel } from '../models/asset.model';
 import { ExpenseFilterModel } from '../models/expense-filter.model';
 import { FormControl, NgForm } from '@angular/forms';
 import { RestService } from '../rest.service';
+import { isNgTemplate } from '@angular/compiler';
 
 @Component({
   selector: 'app-expense-filter',
@@ -33,6 +34,7 @@ export class ExpenseFilterComponent implements AfterViewInit {
   @Input() assets: AssetModel[] = [];
   @Input() filedsToDisable :any = {};
   @Output() apply = new EventEmitter();
+  subCategories: SubCategoryModel[] = [];
 
   constructor(private service: RestService) { }
 
@@ -59,11 +61,20 @@ export class ExpenseFilterComponent implements AfterViewInit {
       data: this.filterForm.value
     }).subscribe(
       data => {
-        console.log('got resposne for filter req',data)
         this.resultCount = (<any>data).overallCount
       },
       err => console.log(err)
     );
+  }
+
+  populateSubCategories(catIds) {
+    this.subCategories = [];
+    if (!catIds || catIds.length ==0 ) {
+      return;
+    }
+    this.categories
+      .filter(item => catIds.indexOf(item.id) > -1)
+      .forEach(item => this.subCategories.push(...item.subCategories));
   }
 
 }
