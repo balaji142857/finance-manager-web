@@ -76,7 +76,6 @@ export class ExpenseComponent implements OnInit {
           },
           data: this.appliedFilterObj})),
         map(response =>  {
-          console.log('merge call has triggered filter call');
           this.appliedFilterResultsLength = (<any>response).overallCount;
           return (<any>response).data;
         }),
@@ -87,8 +86,8 @@ export class ExpenseComponent implements OnInit {
 
   applyFilter(filterObj) {
     this.appliedFilterObj = filterObj;
+    this.paginator.pageIndex = 0
     this.paginator._changePageSize(this.paginator.pageSize);
-    console.log('apply filter called');
   }
 
   openExpense(exp: ExpenseModel, event) {
