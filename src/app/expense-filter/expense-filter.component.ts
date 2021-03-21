@@ -36,7 +36,7 @@ export class ExpenseFilterComponent implements AfterViewInit {
   @Input() filedsToDisable :any = {};
   @Output() apply = new EventEmitter();
 
-  constructor(private service: RestService, private util: UtilService) { }
+  constructor(private service: RestService, public util: UtilService) { }
 
 
 
