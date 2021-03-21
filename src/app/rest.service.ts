@@ -43,10 +43,6 @@ export class RestService {
     return this.http.post(this.basePath+'categories/delete/'+id,null);
   }
 
-  getDailyExpenses(from, to): Observable<ChartDataModel> {
-    return this.http.post<ChartDataModel>(this.basePath+'dashboard/expenseByMonthDay',{'from': from, 'to': to});
-  }
-
   listExpenses(): Observable<ExpenseModel[]> {
     return this.http.get<ExpenseModel[]>(this.basePath+'expenses');
   }
@@ -73,21 +69,27 @@ export class RestService {
       }
   }
 
-  getMonthlyExpenses(from, to): Observable<ChartDataModel> {
-    return this.http.post<ChartDataModel>(this.basePath+'dashboard/expenseByYearMonth',{'from': from, 'to': to});
+  getDailyExpenses(obj): Observable<ChartDataModel> {
+    return this.http.post<ChartDataModel>(this.basePath+'dashboard/'+'getExpenseByMonthDay', obj);
   }
 
-  getExpensesByCategory(from, to): Observable<ChartDataModel>  {
-    return this.http.post<ChartDataModel>(this.basePath+'dashboard/expenseByCategories',{'from': from, 'to': to});
+  getMonthlyExpenses(obj): Observable<ChartDataModel> {
+    return this.http.post<ChartDataModel>(this.basePath+'dashboard/'+'getExpenseByYearMonth', obj);
   }
 
-  getExpensesByCategoryNew(obj: any): Observable<ChartDataModel>  {
-    return this.http.post<ChartDataModel>(this.basePath+'dashboard/expenseByCategories',obj);
+  getExpensesByCategory(obj): Observable<ChartDataModel>  {
+    return this.http.post<ChartDataModel>(this.basePath+'dashboard/'+'getExpenseByCategories', obj);
   }
 
   getAssetUsage(obj: any): Observable<ChartDataModel>  {
-    return this.http.post<ChartDataModel>(this.basePath+'dashboard/assetUsage',obj);
+    return this.http.post<ChartDataModel>(this.basePath+'dashboard/'+'getAssetUsage', obj);
   }
+
+  downloadExpenses(): Observable<Blob> {
+    return this.http.post(this.basePath+'expenses/download', null,  {
+      responseType: 'blob'
+    })
+}
 
   getDefaultExpenseFilter() {
     return {
@@ -107,6 +109,12 @@ export class RestService {
         comment: null
       }
     }
+  }
+
+  downloadFile(data: any) {
+    const blob = new Blob(data , { type: 'text/csv' });
+    const url= window.URL.createObjectURL(blob);
+    window.open(url);
   }
 
 }

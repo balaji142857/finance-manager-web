@@ -10,6 +10,7 @@ import * as config from '../../common/config';
 import { UtilService } from 'src/common/util.service';
 import { CategoryModel } from '../models/category.model';
 import { Asset as AssetModel } from '../models/asset.model';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
@@ -29,7 +30,9 @@ export class DashboardComponent {
   filedsToDisable = {
     subCategory: true,
     comment: true,
-    txDetail: true
+    txDetail: true,
+    minAmount: true,
+    maxAmount: true
   }
   barChartConfig: ChartConfigModel = {
     chartType: 'bar',
@@ -62,7 +65,7 @@ export class DashboardComponent {
     this.categoryExpenseData = this.route.snapshot.data['categoryExpenses'];
   }
   retrieveChartData(filterObj) {
-    this.service.getExpensesByCategoryNew(filterObj).subscribe(
+    this.service.getExpensesByCategory(filterObj).subscribe(
       data => this.categoryExpenseData = data,
       err => this.util.showError(err, config.default.messages.chartLoadExpCat)
     );
@@ -70,27 +73,14 @@ export class DashboardComponent {
       data =>  this.assetChartData = data,
       err => this.util.showError(err, config.default.messages.chartLoadAssetExp)
     );
-  }
-
-  reloadChartData() {
-
-    this.service.getDailyExpenses(this.from, this.to).subscribe(
+    this.service.getDailyExpenses(filterObj).subscribe(
       data =>  this.dailyExpenseData = data,
       err => this.util.showError(err, config.default.messages.chartLoadDailyExp)
     );
-    this.service.getMonthlyExpenses(this.from, this.to).subscribe(
+    this.service.getMonthlyExpenses(filterObj).subscribe(
       data => this.monthlyExpenseData = data,
       err => this.util.showError(err, config.default.messages.chartLoadMonthlyExp)
     );
-    // this.service.getExpensesByCategory(this.from, this.to).subscribe(
-    //   data => this.categoryExpenseData = data,
-    //   err => this.util.showError(err, config.default.messages.chartLoadExpCat)
-    // );
-
-  }
-
-  dateRangeChanged() {
-    this.reloadChartData();
   }
 
   translate(data: Asset[], title: string): ChartDataModel {
@@ -106,6 +96,6 @@ export class DashboardComponent {
       });
     });
     return { data: chartData, title: title };
-    }
+  }
 
 }

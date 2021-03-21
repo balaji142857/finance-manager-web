@@ -2,7 +2,7 @@
   .f-row{
     display: flex;
     justify-content: space-between;
-    mat-form-field:not(.flex-30) {
+    mat-number-input, mat-form-field:not(.flex-30) {
       flex-basis: 45%;
     }
     mat-form-field.flex-30 {
