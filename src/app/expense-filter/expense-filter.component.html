@@ -15,7 +15,7 @@
     </mat-form-field>
     <mat-form-field class="flex-30">
       <mat-label>Category</mat-label>
-      <mat-select [(ngModel)]="filterObj.category" multiple name="category" [disabled]="filedsToDisable.category">
+      <mat-select [(ngModel)]="filterObj.category" (selectionChange)="populateSubCategories($event.value)" multiple name="category" [disabled]="filedsToDisable.category">
         <mat-option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -23,7 +23,7 @@
       <mat-label>SubCategory</mat-label>
       <mat-select [(ngModel)]="filterObj.subCategory" multiple name="subCategory"
       [disabled]="filedsToDisable.subCategory">
-        <!-- <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option> -->
+      <mat-option *ngFor="let subCat of subCategories" [value]="subCat.id">{{subCat.name}}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
