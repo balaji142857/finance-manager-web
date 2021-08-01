@@ -39,7 +39,8 @@ export class ExpenseComponent implements OnInit {
   dataSource = [];
   ELEMENT_DATA = { data:[] };
   columnsToDisplay = ['asset','category','subCategory','amount','date','actions'];
-
+  footerColumns = ['subCategory','amount']
+  totalAmount =  0;
   appliedFilterObj: ExpenseFilterModel;
   appliedFilterResultsLength;
   expandedElement: ExpenseModel | null;
@@ -77,6 +78,7 @@ export class ExpenseComponent implements OnInit {
           data: this.appliedFilterObj})),
         map(response =>  {
           this.appliedFilterResultsLength = (<any>response).overallCount;
+          this.totalAmount = this.getTotalAmount((<any>response).data);
           return (<any>response).data;
         }),
         catchError(() =>   of([]))
@@ -140,6 +142,10 @@ export class ExpenseComponent implements OnInit {
 
   downloadExpenses() {
     this.service.downloadExpenses().subscribe(data => saveAs(data, 'ApplicationExport.xls'));
+  }
+
+  getTotalAmount(values: any[]) {
+    return values.map(t => t.amount).reduce((acc, value) => acc + value, 0);
   }
 
 

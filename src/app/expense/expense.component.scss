@@ -18,10 +18,19 @@ $accent: mat-palette($mat-amber, A400, A300, A600);
   display: flex;
   font-weight: bold;
 }
+.mat-sort-header-indicator {
+  color: white;
+}
 
 .example-element-row{
   cursor: pointer;
 }
+
+.example-footer-row {
+  font-weight: bold;
+  font-size: 45px !important;
+}
+
 .example-element-symbol {
   font-weight: bold;
   font-size: 40px;

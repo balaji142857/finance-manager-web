@@ -30,7 +30,9 @@ tr th button{
   background-color: crimson !important;
 }
 
-
+.mat-sort-header-arrow {
+  color: white !important;
+}
 @import '~@angular/material/theming';
 $custom-typography: mat-typography-config($font-family: '"Oswald", sans-serif;');
 @include mat-core($custom-typography);
