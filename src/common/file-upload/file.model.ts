@@ -4,6 +4,6 @@ export interface FileModel {
 	size: number;
 	content?: File;
 	section: string;
-  comment?: null;
-  file?: File
+  	format?: null;
+  	file?: File
 }

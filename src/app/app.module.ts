@@ -25,6 +25,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { GenericDialogComponent } from './dialogs/generic-dialog/generic-dialog.component';
 import { SnackbarModule } from 'src/common/snackbar/snackbar.module';
 import { ExpenseFilterComponent } from './expense-filter/expense-filter.component';
+import { VerificationComponent } from './report/verification/verification.component';
 
 
 // Pass the fusioncharts library and chart modules
@@ -41,7 +42,8 @@ import { ExpenseFilterComponent } from './expense-filter/expense-filter.componen
     CategoryDialogComponent,
     GenericDialogComponent,
     SettingsComponent,
-    ExpenseFilterComponent
+    ExpenseFilterComponent,
+    VerificationComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +67,6 @@ import { ExpenseFilterComponent } from './expense-filter/expense-filter.componen
   entryComponents: [AssetDialogComponent,
     ExpenseDialogComponent,
     CategoryDialogComponent,
-  GenericDialogComponent]
+    GenericDialogComponent]
 })
 export class AppModule { }

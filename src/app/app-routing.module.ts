@@ -13,6 +13,8 @@ import { MonthlyExpenseResolverService } from './services/monthly-expense-resolv
 import { CategoryExpenseResolverService } from './services/category-expense-resolver.service';
 import { SettingsComponent } from './settings/settings.component';
 import { ExpenseResolverService } from './services/expense-resolver.service';
+import { ImportFormatsResovlerService } from './services/import-formats-resovler.service';
+import { VerificationComponent } from './report/verification/verification.component';
 
 
 
@@ -25,27 +27,46 @@ const routes: Routes = [
       'expCat': ExpCatResolverService
     }
   }, {
-     component: DashboardComponent, path: 'dashboard',
-      resolve: {
-      'assets' : AssetResolverService,
+    component: DashboardComponent, path: 'dashboard',
+    resolve: {
+      'assets': AssetResolverService,
       'categories': ExpCatResolverService,
       'dailyExpenes': DailyExpenseResolverService,
       'monthlyExpenes': MonthlyExpenseResolverService,
       'categoryExpenses': CategoryExpenseResolverService
-    }}, { component: ExpenseComponent, path: 'expense',
-  resolve: {
-    'assets' : AssetResolverService,
-    'categories': ExpCatResolverService,
-    'expenses': ExpenseResolverService
-  }},
-    { component: AssetComponent, path: 'assets',
-      resolve: {
-        'assets' : AssetResolverService
-      }}, { component: ReportComponent, path: 'reports'},
-  { component: SettingsComponent, path: 'settings',
-  resolve: {
-    'categories': ExpCatResolverService
-  }}
+    }
+  }, {
+    component: ExpenseComponent, path: 'expense',
+    resolve: {
+      'assets': AssetResolverService,
+      'categories': ExpCatResolverService,
+      'expenses': ExpenseResolverService
+    }
+  }, {
+    component: AssetComponent, path: 'assets',
+    resolve: {
+      'assets': AssetResolverService
+    }
+  }, {
+    component: ReportComponent, path: 'reports',
+    resolve: {
+      'assets': AssetResolverService,
+      'categories': ExpCatResolverService,
+      'importFormats': ImportFormatsResovlerService
+    }
+  }, {
+    component: VerificationComponent, path: 'verify',
+    resolve: {
+      'assets': AssetResolverService,
+      'categories': ExpCatResolverService,
+      'importFormats': ImportFormatsResovlerService
+    }
+  }, {
+    component: SettingsComponent, path: 'settings',
+    resolve: {
+      'categories': ExpCatResolverService
+    }
+  }
 ];
 
 @NgModule({

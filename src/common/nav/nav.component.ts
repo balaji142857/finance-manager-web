@@ -21,7 +21,7 @@ export class NavComponent {
     route: 'expense',
     icon: 'account_balance_wallet'
   }, {
-    label: 'Reports',
+    label: 'Bulk Import',
     route: 'reports',
     icon: 'description'
   }, {

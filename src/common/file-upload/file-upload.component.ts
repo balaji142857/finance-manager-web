@@ -1,4 +1,4 @@
-import { Component, OnInit, forwardRef } from '@angular/core';
+import { Component, OnInit, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FileModel } from './file.model';
 
@@ -19,6 +19,7 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
 	isDisabled: boolean;
 	propagateChange: (x: any) => {};
 	files: FileModel[] = [];
+	@Input() formats;
 	config= {
 		section: 'DEFAULT_SECTION'
 	}
@@ -72,8 +73,8 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
 							content: val,
 							name: val.name,
 							size: val.size,
-							comment: null,
-              section: this.config.section,
+							format: null,
+              				section: this.config.section,
 						});
 				};
 		}

@@ -23,6 +23,10 @@ export class RestService {
     return this.http.get<Asset[]>(this.basePath+'assets/');
   }
 
+  getImportFormats(): Observable<Asset[]> {
+    return this.http.get<Asset[]>(this.basePath+'static/import-formats');
+  }
+
   saveAsset(asset: Asset): Observable<Asset> {
     return this.http.post<Asset>(this.basePath+'assets/', asset);
   }

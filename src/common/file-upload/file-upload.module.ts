@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FileUploadComponent } from './file-upload.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -10,7 +11,8 @@ import { FormsModule } from '@angular/forms';
 		CommonModule,
 		MatIconModule,
 		FormsModule,
-		MatInputModule
+		MatInputModule,
+		MatSelectModule
 	],
 	declarations: [FileUploadComponent],
 	exports: [FileUploadComponent]
